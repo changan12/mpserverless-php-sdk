@@ -50,7 +50,8 @@ MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDYE3X9+kfyhk+oU1HmwCVbA3kxsD6H
 	 */
 	public function __construct($clientConfig = []){
 		$this->httpClient = new Client(array_merge([
-			'base_uri' => 'http://api-test.bspapp.com/server',
+//			'base_uri' => 'https://api.bspapp.com/server',
+			'base_uri' => 'http://39.98.106.113/server',
 			'timeout'  => 2.0,
 		], $clientConfig));
 
@@ -105,8 +106,11 @@ MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDYE3X9+kfyhk+oU1HmwCVbA3kxsD6H
 
 		$verify = openssl_sign($dataStr, $signData, $pkId, OPENSSL_ALGO_SHA256);
 		if(!$verify){
+			openssl_free_key($pkId);
 			throw new ServerlessException("签名生成失败：".openssl_error_string());
 		}
+
+		openssl_free_key($pkId);
 
 		return bin2hex($signData);
 	}
