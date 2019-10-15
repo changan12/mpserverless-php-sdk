@@ -37,125 +37,105 @@ class DbService
     public function insertOne($collection, $doc, $options = [])
     {
         return $this->request([
-            'params' => json_encode([
-                'command' => 'insertOne',
-                'collection' => $collection,
-                'doc' => empty($doc) ? new \stdClass() : $doc,
-                'options' => empty($options) ? new \stdClass() : $options,
-            ]),
+            'command' => 'insertOne',
+            'collection' => $collection,
+            'doc' => empty($doc) ? new \stdClass() : $doc,
+            'options' => empty($options) ? new \stdClass() : $options,
         ]);
     }
 
     public function insertMany($collection, $doc, $options = [])
     {
         return $this->request([
-            'params' => json_encode([
-                'command' => 'insertMany',
-                'collection' => $collection,
-                'doc' => empty($doc) ? new \stdClass() : $doc,
-                'options' => empty($options) ? new \stdClass() : $options,
-            ]),
+            'command' => 'insertMany',
+            'collection' => $collection,
+            'doc' => empty($doc) ? new \stdClass() : $doc,
+            'options' => empty($options) ? new \stdClass() : $options,
         ]);
     }
 
     public function deleteOne($collection, $filter, $options = [])
     {
         return $this->request([
-            'params' => json_encode([
-                'command' => 'deleteOne',
-                'collection' => $collection,
-                'filter' => empty($filter) ? new \stdClass() : $filter,
-                'options' => empty($options) ? new \stdClass() : $options,
-            ]),
+            'command' => 'deleteOne',
+            'collection' => $collection,
+            'filter' => empty($filter) ? new \stdClass() : $filter,
+            'options' => empty($options) ? new \stdClass() : $options,
         ]);
     }
 
     public function deleteMany($collection, $filter, $options = [])
     {
         return $this->request([
-            'params' => json_encode([
-                'command' => 'deleteMany',
-                'collection' => $collection,
-                'filter' => empty($filter) ? new \stdClass() : $filter,
-                'options' => empty($options) ? new \stdClass() : $options,
-            ]),
+            'command' => 'deleteMany',
+            'collection' => $collection,
+            'filter' => empty($filter) ? new \stdClass() : $filter,
+            'options' => empty($options) ? new \stdClass() : $options,
         ]);
     }
 
     public function findOneAndDelete($collection, $filter, $options = [])
     {
         return $this->request([
-            'params' => json_encode([
-                'command' => 'findOneAndDelete',
-                'collection' => $collection,
-                'filter' => empty($filter) ? new \stdClass() : $filter,
-                'options' => empty($options) ? new \stdClass() : $options,
-            ]),
+            'command' => 'findOneAndDelete',
+            'collection' => $collection,
+            'filter' => empty($filter) ? new \stdClass() : $filter,
+            'options' => empty($options) ? new \stdClass() : $options,
         ]);
     }
 
     public function findOneAndUpdate($collection, $filter, $update, $options = [])
     {
         return $this->request([
-            'params' => json_encode([
-                'command' => 'findOneAndUpdate',
-                'collection' => $collection,
-                'update' => empty($update) ? new \stdClass() : $update,
-                'filter' => empty($filter) ? new \stdClass() : $filter,
-                'options' => empty($options) ? new \stdClass() : $options,
-            ]),
+            'command' => 'findOneAndUpdate',
+            'collection' => $collection,
+            'update' => empty($update) ? new \stdClass() : $update,
+            'filter' => empty($filter) ? new \stdClass() : $filter,
+            'options' => empty($options) ? new \stdClass() : $options,
         ]);
     }
 
     public function updateOne($collection, $filter, $update, $options = [])
     {
         return $this->request([
-            'params' => json_encode([
-                'command' => 'updateOne',
-                'collection' => $collection,
-                'update' => empty($update) ? new \stdClass() : $update,
-                'filter' => empty($filter) ? new \stdClass() : $filter,
-                'options' => empty($options) ? new \stdClass() : $options,
-            ]),
+            'command' => 'updateOne',
+            'collection' => $collection,
+            'update' => empty($update) ? new \stdClass() : $update,
+            'filter' => empty($filter) ? new \stdClass() : $filter,
+            'options' => empty($options) ? new \stdClass() : $options,
         ]);
     }
 
     public function updateMany($collection, $filter, $update, $options = [])
     {
         return $this->request([
-            'params' => json_encode([
-                'command' => 'updateMany',
-                'collection' => $collection,
-                'update' => empty($update) ? new \stdClass() : $update,
-                'filter' => empty($filter) ? new \stdClass() : $filter,
-                'options' => empty($options) ? new \stdClass() : $options,
-            ]),
+            'command' => 'updateMany',
+            'collection' => $collection,
+            'update' => empty($update) ? new \stdClass() : $update,
+            'filter' => empty($filter) ? new \stdClass() : $filter,
+            'options' => empty($options) ? new \stdClass() : $options,
         ]);
     }
 
     public function findOneAndReplace($collection, $filter, $replacement, $options = [])
     {
         return $this->request([
-            'params' => json_encode([
-                'command' => 'findOneAndReplace',
-                'collection' => $collection,
-                'filter' => empty($filter) ? new \stdClass() : $filter,
-                'replacement' => empty($replacement) ? new \stdClass() : $replacement,
-                'options' => empty($options) ? new \stdClass() : $options,
-            ]),
+            'command' => 'findOneAndReplace',
+            'collection' => $collection,
+            'filter' => empty($filter) ? new \stdClass() : $filter,
+            'replacement' => empty($replacement) ? new \stdClass() : $replacement,
+            'options' => empty($options) ? new \stdClass() : $options,
         ]);
     }
 
     public function replaceOne($collection, $filter, $doc, $options = [])
     {
         return $this->request([
-            'params' => json_encode([
-                'command' => 'replaceOne',
-                'collection' => $collection,
-                'filter' => empty($filter) ? new \stdClass() : $filter,
-                'doc' => empty($doc) ? new \stdClass() : $doc,
-                'options' => empty($options) ? new \stdClass() : $options,
-            ]),
+            'command' => 'replaceOne',
+            'collection' => $collection,
+            'filter' => empty($filter) ? new \stdClass() : $filter,
+            'doc' => empty($doc) ? new \stdClass() : $doc,
+            'options' => empty($options) ? new \stdClass() : $options,
         ]);
     }
 
@@ -163,73 +143,61 @@ class DbService
     public function select($collection, $doc, $options = [])
     {
         return $this->request([
-            'params' => json_encode([
-                'command' => 'insertOne',
-                'collection' => $collection,
-                'doc' => empty($doc) ? new \stdClass() : $doc,
-                'options' => empty($options) ? new \stdClass() : $options,
-            ]),
+            'command' => 'insertOne',
+            'collection' => $collection,
+            'doc' => empty($doc) ? new \stdClass() : $doc,
+            'options' => empty($options) ? new \stdClass() : $options,
         ]);
     }
 
     public function findOne($collection, $query, $options = [])
     {
         return $this->request([
-            'params' => json_encode([
-                'command' => 'findOne',
-                'collection' => $collection,
-                'query' => empty($query) ? new \stdClass() : $query,
-                'options' => empty($options) ? new \stdClass() : $options,
-            ]),
+            'command' => 'findOne',
+            'collection' => $collection,
+            'query' => empty($query) ? new \stdClass() : $query,
+            'options' => empty($options) ? new \stdClass() : $options,
         ]);
     }
 
     public function find($collection, $query, $options = [])
     {
         return $this->request([
-            'params' => json_encode([
-                'command' => 'find',
-                'collection' => $collection,
-                'query' => empty($query) ? new \stdClass() : $query,
-                'options' => empty($options) ? new \stdClass() : $options,
-            ]),
+            'command' => 'find',
+            'collection' => $collection,
+            'query' => empty($query) ? new \stdClass() : $query,
+            'options' => empty($options) ? new \stdClass() : $options,
         ]);
     }
 
     public function aggregate($collection, $pipeline, $options = [])
     {
         return $this->request([
-            'params' => json_encode([
-                'command' => 'aggregate',
-                'collection' => $collection,
-                'pipeline' => empty($pipeline) ? new \stdClass() : $pipeline,
-                'options' => empty($options) ? new \stdClass() : $options,
-            ]),
+            'command' => 'aggregate',
+            'collection' => $collection,
+            'pipeline' => empty($pipeline) ? new \stdClass() : $pipeline,
+            'options' => empty($options) ? new \stdClass() : $options,
         ]);
     }
 
     public function count($collection, $query, $options = [])
     {
         return $this->request([
-            'params' => json_encode([
-                'command' => 'count',
-                'collection' => $collection,
-                'query' => empty($query) ? new \stdClass() : $query,
-                'options' => empty($options) ? new \stdClass() : $options,
-            ]),
+            'command' => 'count',
+            'collection' => $collection,
+            'query' => empty($query) ? new \stdClass() : $query,
+            'options' => empty($options) ? new \stdClass() : $options,
         ]);
     }
 
     public function distinct($collection, $query, $key, $options = [])
     {
         return $this->request([
-            'params' => json_encode([
-                'command' => 'distinct',
-                'collection' => $collection,
-                'key' => empty($key) ? new \stdClass() : $key,
-                'query' => empty($query) ? new \stdClass() : $query,
-                'options' => empty($options) ? new \stdClass() : $options,
-            ]),
+            'command' => 'distinct',
+            'collection' => $collection,
+            'key' => empty($key) ? new \stdClass() : $key,
+            'query' => empty($query) ? new \stdClass() : $query,
+            'options' => empty($options) ? new \stdClass() : $options,
         ]);
     }
 
@@ -243,12 +211,10 @@ class DbService
     public function createIndex($collection, $field, $options = [])
     {
         return $this->request([
-            'params' => json_encode([
-                'command' => 'createIndex',
-                'collection' => $collection,
-                'field' => empty($field) ? new \stdClass() : $field,
-                'options' => empty($options) ? new \stdClass() : $options,
-            ]),
+            'command' => 'createIndex',
+            'collection' => $collection,
+            'field' => empty($field) ? new \stdClass() : $field,
+            'options' => empty($options) ? new \stdClass() : $options,
         ]);
     }
 
@@ -260,10 +226,8 @@ class DbService
     public function listIndex($collection)
     {
         return $this->request([
-            'params' => json_encode([
-                'command' => 'listIndex',
-                'collection' => $collection,
-            ]),
+            'command' => 'listIndex',
+            'collection' => $collection,
         ]);
     }
 
@@ -276,11 +240,9 @@ class DbService
     public function dropIndex($collection, $indexName)
     {
         return $this->request([
-            'params' => json_encode([
-                'command' => 'dropIndex',
-                'indexName' => empty($indexName) ? new \stdClass() : $indexName,
-                'collection' => $collection,
-            ]),
+            'command' => 'dropIndex',
+            'indexName' => empty($indexName) ? new \stdClass() : $indexName,
+            'collection' => $collection,
         ]);
     }
 
@@ -293,12 +255,9 @@ class DbService
     public function createCollection($collection, $name)
     {
         return $this->request([
-            'method' => self::ISVEXECUTE,
-            'params' => json_encode([
-                'command' => 'createCollection',
-                'name' => empty($name) ? new \stdClass() : $name,
-                'collection' => $collection,
-            ]),
+            'command' => 'createCollection',
+            'name' => empty($name) ? new \stdClass() : $name,
+            'collection' => $collection,
         ]);
     }
 
@@ -310,10 +269,8 @@ class DbService
     public function findCollection($collection)
     {
         return $this->request([
-            'params' => json_encode([
-                'command' => 'collections',
-                'collection' => $collection,
-            ]),
+            'command' => 'collections',
+            'collection' => $collection,
         ]);
     }
 
@@ -325,10 +282,8 @@ class DbService
     public function dropCollection($collection)
     {
         return $this->request([
-            'params' => json_encode([
-                'command' => 'drop',
-                'collection' => $collection,
-            ]),
+            'command' => 'drop',
+            'collection' => $collection,
         ]);
     }
 
@@ -341,11 +296,9 @@ class DbService
     public function renameCollection($collection, $newName)
     {
         return $this->request([
-            'params' => json_encode([
-                'command' => 'rename',
-                'newName' => empty($newName) ? new \stdClass() : $newName,
-                'collection' => $collection,
-            ]),
+            'command' => 'rename',
+            'newName' => empty($newName) ? new \stdClass() : $newName,
+            'collection' => $collection,
         ]);
     }
 }
