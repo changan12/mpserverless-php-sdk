@@ -50,7 +50,7 @@ MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDYE3X9+kfyhk+oU1HmwCVbA3kxsD6H
 	 */
 	public function __construct($clientConfig = []){
 		$this->httpClient = new Client(array_merge([
-//			'base_uri' => 'https://api.bspapp.com/server',
+			//			'base_uri' => 'https://api.bspapp.com/server',
 			'base_uri' => 'http://39.98.106.113/server',
 			'timeout'  => 2.0,
 		], $clientConfig));
@@ -98,13 +98,14 @@ MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDYE3X9+kfyhk+oU1HmwCVbA3kxsD6H
 		$dataStr = Str::buildUrlQuery($data, function($key, $val){
 			return $key.'='.$val;
 		});
+		echo "待签名的字符串：{$dataStr}\n";
 
 		$pkId = openssl_get_privatekey($privateKey);
 		if(!$pkId){
 			throw new ServerlessException("不是一个正确的私钥！");
 		}
 
-		$verify = openssl_sign($dataStr, $signData, $pkId, OPENSSL_ALGO_SHA256);
+		$verify = openssl_sign($dataStr, $signData, $pkId, OPENSSL_ALGO_MD5);
 		if(!$verify){
 			openssl_free_key($pkId);
 			throw new ServerlessException("签名生成失败：".openssl_error_string());
