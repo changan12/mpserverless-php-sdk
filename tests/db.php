@@ -17,5 +17,5 @@ $serverless = new Serverless();
 
 
 
-$res = $serverless->db->listIndex('test-duoguan');
+$res = $serverless->db->listIndexes('test-duoguan');
 var_dump($res);

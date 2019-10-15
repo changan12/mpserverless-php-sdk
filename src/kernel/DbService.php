@@ -325,10 +325,10 @@ class DbService
      * @param $collection
      * @return string
      */
-    public function listIndex($collection)
+    public function listIndexes($collection)
     {
         return $this->request([
-            'command' => 'listIndex',
+            'command' => 'listIndexes',
             'collection' => $collection,
         ]);
     }
