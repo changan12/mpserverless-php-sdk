@@ -13,6 +13,9 @@ require_once '../vendor/autoload.php';
 $serverless = new Serverless();
 //$res = $serverless->db->insertMany('test-duoguan', [['bbb'=>'bbbbbbbbbb','aaa'=>'aaaaaaaaaa']], []);
 //$res = $serverless->db->find('test-duoguan', [], []);
-$res = $serverless->db->updateOne('test-duoguan', ['_id' => '5da57bbae1b3c1005e053709'], ['bbb'=>'123']);
-//$res = $serverless->db->listIndex('test-duoguan');
+//$res = $serverless->db->updateMany('test-duoguan', ['bbb'=>'2222222222222'], ['$set'=>['bbb'=>'2222222222222','ccc'=>'333333333333']]);
+
+
+
+$res = $serverless->db->listIndex('test-duoguan');
 var_dump($res);

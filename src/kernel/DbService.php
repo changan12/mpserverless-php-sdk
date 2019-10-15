@@ -119,7 +119,14 @@ class DbService
         ]);
     }
 
-
+    /**
+     * 查找一条数据后更新
+     * @param $collection
+     * @param array $filter
+     * @param array $update
+     * @param array $options
+     * @return string
+     */
     public function findOneAndUpdate($collection, $filter = [], $update = [], $options = [])
     {
         return $this->request([
@@ -132,6 +139,14 @@ class DbService
     }
 
 
+    /**
+     * 更新一条数据
+     * @param $collection
+     * @param array $filter
+     * @param array $update
+     * @param array $options
+     * @return string
+     */
     public function updateOne($collection, $filter = [], $update = [], $options = [])
     {
         return $this->request([
@@ -143,7 +158,14 @@ class DbService
         ]);
     }
 
-
+    /**
+     * 更新多条数据
+     * @param $collection
+     * @param array $filter
+     * @param array $update
+     * @param array $options
+     * @return string
+     */
     public function updateMany($collection, $filter = [], $update = [], $options = [])
     {
         return $this->request([
@@ -155,7 +177,14 @@ class DbService
         ]);
     }
 
-
+    /**
+     * 查找一条数据后替换
+     * @param $collection
+     * @param array $filter
+     * @param array $replacement
+     * @param array $options
+     * @return string
+     */
     public function findOneAndReplace($collection, $filter = [], $replacement = [], $options = [])
     {
         return $this->request([
@@ -167,7 +196,14 @@ class DbService
         ]);
     }
 
-
+    /**
+     * 替换一条
+     * @param $collection
+     * @param array $filter
+     * @param array $doc
+     * @param array $options
+     * @return string
+     */
     public function replaceOne($collection, $filter = [], $doc = [], $options = [])
     {
         return $this->request([
@@ -214,6 +250,13 @@ class DbService
         ]);
     }
 
+    /**
+     * 聚合
+     * @param $collection
+     * @param array $pipeline
+     * @param array $options
+     * @return string
+     */
     public function aggregate($collection, $pipeline = [], $options = [])
     {
         return $this->request([
@@ -224,6 +267,13 @@ class DbService
         ]);
     }
 
+    /**
+     * 统计数量
+     * @param $collection
+     * @param array $query
+     * @param array $options
+     * @return string
+     */
     public function count($collection, $query = [], $options = [])
     {
         return $this->request([
@@ -234,6 +284,14 @@ class DbService
         ]);
     }
 
+    /**
+     * 返回唯一不同的值
+     * @param $collection
+     * @param $key
+     * @param array $query
+     * @param array $options
+     * @return string
+     */
     public function distinct($collection, $key, $query = [], $options = [])
     {
         return $this->request([
