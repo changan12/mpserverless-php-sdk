@@ -10,15 +10,20 @@ namespace xin\serverless\providers;
 
 use xin\container\Container;
 use xin\container\ProviderInterface;
+use xin\serverless\kernel\CloudCallService;
 
-class CloudCallServiceProvider implements ProviderInterface{
+class CloudCallServiceProvider implements ProviderInterface
+{
 
-	/**
-	 * 注册服务
-	 *
-	 * @param \xin\container\Container $container
-	 */
-	public function register(Container $container){
-		// TODO: Implement register() method.
-	}
+    /**
+     * 注册服务
+     *
+     * @param \xin\container\Container $container
+     */
+    public function register(Container $container)
+    {
+        $container->singleton('cloud', function () use ($container) {
+            return new CloudCallService($container);
+        });
+    }
 }

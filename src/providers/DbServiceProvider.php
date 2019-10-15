@@ -12,16 +12,18 @@ use xin\container\Container;
 use xin\container\ProviderInterface;
 use xin\serverless\kernel\DbService;
 
-class DbServiceProvider implements ProviderInterface{
+class DbServiceProvider implements ProviderInterface
+{
 
-	/**
-	 * 注册服务
-	 *
-	 * @param \xin\container\Container $container
-	 */
-	public function register(Container $container){
-		$container->singleton('db', function() use ($container){
-			return new DbService($container);
-		});
-	}
+    /**
+     * 注册服务
+     *
+     * @param \xin\container\Container $container
+     */
+    public function register(Container $container)
+    {
+        $container->singleton('db', function () use ($container) {
+            return new DbService($container);
+        });
+    }
 }

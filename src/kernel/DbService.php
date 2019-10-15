@@ -140,16 +140,6 @@ class DbService
     }
 
 
-    public function select($collection, $doc, $options = [])
-    {
-        return $this->request([
-            'command' => 'insertOne',
-            'collection' => $collection,
-            'doc' => empty($doc) ? new \stdClass() : $doc,
-            'options' => empty($options) ? new \stdClass() : $options,
-        ]);
-    }
-
     public function findOne($collection, $query, $options = [])
     {
         return $this->request([

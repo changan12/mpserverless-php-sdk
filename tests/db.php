@@ -11,7 +11,7 @@ use xin\serverless\Serverless;
 require_once '../vendor/autoload.php';
 
 $serverless = new Serverless();
-$res = $serverless->db->find('test', [
-
-]);
+//$res = $serverless->db->find('test', []);
+//$res = $serverless->cloud->invoke('test', []);
+$res = $serverless->file->fileDelete('test');
 var_dump($res);
