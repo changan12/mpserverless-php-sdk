@@ -11,7 +11,8 @@ use xin\serverless\Serverless;
 require_once '../vendor/autoload.php';
 
 $serverless = new Serverless();
-//$res = $serverless->db->find('test', []);
-//$res = $serverless->cloud->invoke('test', []);
-$res = $serverless->file->fileDelete('test');
+//$res = $serverless->db->insertMany('test-duoguan', [['bbb'=>'bbbbbbbbbb','aaa'=>'aaaaaaaaaa']], []);
+//$res = $serverless->db->find('test-duoguan', [], []);
+$res = $serverless->db->updateOne('test-duoguan', ['_id' => '5da57bbae1b3c1005e053709'], ['bbb'=>'123']);
+//$res = $serverless->db->listIndex('test-duoguan');
 var_dump($res);

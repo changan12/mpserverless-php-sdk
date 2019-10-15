@@ -34,7 +34,14 @@ class DbService
         ]);
     }
 
-    public function insertOne($collection, $doc, $options = [])
+    /**
+     * 插入一条
+     * @param $collection
+     * @param array $doc
+     * @param array $options
+     * @return string
+     */
+    public function insertOne($collection, $doc = [], $options = [])
     {
         return $this->request([
             'command' => 'insertOne',
@@ -44,17 +51,31 @@ class DbService
         ]);
     }
 
-    public function insertMany($collection, $doc, $options = [])
+    /**
+     * 插入多条
+     * @param $collection
+     * @param array $docs
+     * @param array $options
+     * @return string
+     */
+    public function insertMany($collection, $docs = [], $options = [])
     {
         return $this->request([
             'command' => 'insertMany',
             'collection' => $collection,
-            'doc' => empty($doc) ? new \stdClass() : $doc,
+            'docs' => empty($docs) ? new \stdClass() : $docs,
             'options' => empty($options) ? new \stdClass() : $options,
         ]);
     }
 
-    public function deleteOne($collection, $filter, $options = [])
+    /**
+     * 删除一条
+     * @param $collection
+     * @param array $filter
+     * @param array $options
+     * @return string
+     */
+    public function deleteOne($collection, $filter = [], $options = [])
     {
         return $this->request([
             'command' => 'deleteOne',
@@ -64,7 +85,14 @@ class DbService
         ]);
     }
 
-    public function deleteMany($collection, $filter, $options = [])
+    /**
+     * 删除多条
+     * @param $collection
+     * @param array $filter
+     * @param array $options
+     * @return string
+     */
+    public function deleteMany($collection, $filter = [], $options = [])
     {
         return $this->request([
             'command' => 'deleteMany',
@@ -74,7 +102,14 @@ class DbService
         ]);
     }
 
-    public function findOneAndDelete($collection, $filter, $options = [])
+    /**
+     * 查找一条数据后删除
+     * @param $collection
+     * @param array $filter
+     * @param array $options
+     * @return string
+     */
+    public function findOneAndDelete($collection, $filter = [], $options = [])
     {
         return $this->request([
             'command' => 'findOneAndDelete',
@@ -84,7 +119,8 @@ class DbService
         ]);
     }
 
-    public function findOneAndUpdate($collection, $filter, $update, $options = [])
+
+    public function findOneAndUpdate($collection, $filter = [], $update = [], $options = [])
     {
         return $this->request([
             'command' => 'findOneAndUpdate',
@@ -95,7 +131,8 @@ class DbService
         ]);
     }
 
-    public function updateOne($collection, $filter, $update, $options = [])
+
+    public function updateOne($collection, $filter = [], $update = [], $options = [])
     {
         return $this->request([
             'command' => 'updateOne',
@@ -106,7 +143,8 @@ class DbService
         ]);
     }
 
-    public function updateMany($collection, $filter, $update, $options = [])
+
+    public function updateMany($collection, $filter = [], $update = [], $options = [])
     {
         return $this->request([
             'command' => 'updateMany',
@@ -117,7 +155,8 @@ class DbService
         ]);
     }
 
-    public function findOneAndReplace($collection, $filter, $replacement, $options = [])
+
+    public function findOneAndReplace($collection, $filter = [], $replacement = [], $options = [])
     {
         return $this->request([
             'command' => 'findOneAndReplace',
@@ -128,7 +167,8 @@ class DbService
         ]);
     }
 
-    public function replaceOne($collection, $filter, $doc, $options = [])
+
+    public function replaceOne($collection, $filter = [], $doc = [], $options = [])
     {
         return $this->request([
             'command' => 'replaceOne',
@@ -140,7 +180,14 @@ class DbService
     }
 
 
-    public function findOne($collection, $query, $options = [])
+    /**
+     * 查询一条
+     * @param $collection
+     * @param array $query
+     * @param array $options
+     * @return string
+     */
+    public function findOne($collection, $query = [], $options = [])
     {
         return $this->request([
             'command' => 'findOne',
@@ -150,7 +197,14 @@ class DbService
         ]);
     }
 
-    public function find($collection, $query, $options = [])
+    /**
+     * 查询所有
+     * @param $collection
+     * @param array $query
+     * @param array $options
+     * @return string
+     */
+    public function find($collection, $query = [], $options = [])
     {
         return $this->request([
             'command' => 'find',
@@ -160,7 +214,7 @@ class DbService
         ]);
     }
 
-    public function aggregate($collection, $pipeline, $options = [])
+    public function aggregate($collection, $pipeline = [], $options = [])
     {
         return $this->request([
             'command' => 'aggregate',
@@ -170,7 +224,7 @@ class DbService
         ]);
     }
 
-    public function count($collection, $query, $options = [])
+    public function count($collection, $query = [], $options = [])
     {
         return $this->request([
             'command' => 'count',
@@ -180,12 +234,12 @@ class DbService
         ]);
     }
 
-    public function distinct($collection, $query, $key, $options = [])
+    public function distinct($collection, $key, $query = [], $options = [])
     {
         return $this->request([
             'command' => 'distinct',
             'collection' => $collection,
-            'key' => empty($key) ? new \stdClass() : $key,
+            'key' => $key,
             'query' => empty($query) ? new \stdClass() : $query,
             'options' => empty($options) ? new \stdClass() : $options,
         ]);
@@ -238,29 +292,25 @@ class DbService
 
     /**
      * 创建集合
-     * @param $collection
      * @param $name
      * @return string
      */
-    public function createCollection($collection, $name)
+    public function createCollection($name)
     {
         return $this->request([
             'command' => 'createCollection',
-            'name' => empty($name) ? new \stdClass() : $name,
-            'collection' => $collection,
+            'name' => $name,
         ]);
     }
 
     /**
      * 查询集合
-     * @param $collection
      * @return string
      */
-    public function findCollection($collection)
+    public function findCollection()
     {
         return $this->request([
             'command' => 'collections',
-            'collection' => $collection,
         ]);
     }
 
