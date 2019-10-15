@@ -39,15 +39,18 @@ class DbService{
 	}
 
 	public function find($collection, $query, $options = []){
-		// todo
+		return $this->request([
+			'command'    => 'findOne',
+			'collection' => $collection,
+			'query'      => empty($query) ? new \stdClass() : $query,
+			'options'    => empty($options) ? new \stdClass() : $options,
+		]);
+	}
+
+	private function request($params){
 		return $this->serverless->request([
 			'method' => 'serverless.db.isv.execute',
-			'params' => json_encode([
-				'command'    => 'findOne',
-				'collection' => $collection,
-				'query'      => $query,
-				'options'    => $options,
-			]),
+			'params' => json_encode($params),
 		]);
 	}
 
