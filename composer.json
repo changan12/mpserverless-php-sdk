@@ -1,0 +1,31 @@
+{
+	"name":"administrator/severless-sdk",
+	"description":"阿里云serverless-sdk",
+    "type":"library",
+    "version":"1.0.0",
+	"authors":[
+		{
+			"name":"晋",
+			"email":"1540175452@qq.com"
+		}
+	],
+	"autoload":{
+		"psr-4":{
+			"xin\\serverless\\":"src/"
+		}
+	},
+	"license":"Apache-2.0",
+	"minimum-stability":"stable",
+	"require":{
+		"ext-curl":"*",
+		"ext-json":"*",
+		"ext-dom":"*",
+		"ext-libxml":"*",
+		"ext-simplexml":"*",
+		"ext-ctype":"*",
+		"ext-mbstring":"*",
+		"ext-openssl":"*",
+		"xin/container":"^2.0",
+		"guzzlehttp/guzzle":"^6.3"
+	}
+}
