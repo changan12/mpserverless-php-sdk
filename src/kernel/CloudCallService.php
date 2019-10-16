@@ -6,40 +6,59 @@
  * Time: 14:46
  */
 
-namespace xin\serverless\kernel;
+namespace duoguan\aliyun\serverless\kernel;
 
-class CloudCallService
-{
+/**
+ * Class CloudCallService
+ *
+ * @package duoguan\aliyun\serverless\kernel
+ */
+class CloudCallService{
 
-    /**
-     * @var \xin\serverless\Serverless
-     */
-    protected $serverless;
+	/**
+	 * 服务名称
+	 */
+	const SERVICE_NAME = "serverless.function.isv.runtime.invoke";
 
-    /**
-     * CloudCallService constructor.
-     *
-     * @param $serverless
-     */
-    public function __construct($serverless)
-    {
-        $this->serverless = $serverless;
-    }
+	/**
+	 * @var \duoguan\aliyun\serverless\Serverless
+	 */
+	protected $serverless;
 
-    private function request($params)
-    {
-        return $this->serverless->request([
-            'method' => 'serverless.function.isv.runtime.invoke',
-            'params' => json_encode($params),
-        ]);
-    }
+	/**
+	 * CloudCallService constructor.
+	 *
+	 * @param $serverless
+	 */
+	public function __construct($serverless){
+		$this->serverless = $serverless;
+	}
 
-    public function invoke($functionTarget, $functionArgs)
-    {
-        return $this->request([
-            'functionTarget' => $functionTarget,
-            'functionArgs' => empty($functionArgs) ? new \stdClass() : $functionArgs,
-        ]);
-    }
+	/**
+	 * @param $params
+	 * @return string
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	private function request($params){
+		return $this->serverless->request([
+			'method' => self::SERVICE_NAME,
+			'params' => json_encode($params),
+		]);
+	}
+
+	/**
+	 * 调用云函数
+	 *
+	 * @param string $functionTarget
+	 * @param array  $functionArgs
+	 * @return string
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function invoke($functionTarget, $functionArgs){
+		return $this->request([
+			'functionTarget' => $functionTarget,
+			'functionArgs'   => empty($functionArgs) ? new \stdClass() : $functionArgs,
+		]);
+	}
 
 }
