@@ -5,7 +5,7 @@
  * @author: BD<liuxingwu@duoguan.com>
  * @date: 2019/10/15 11:03
  */
-namespace xin\serverless;
+namespace duoguan\aliyun\serverless;
 
 class ServerlessException extends \Exception{
 

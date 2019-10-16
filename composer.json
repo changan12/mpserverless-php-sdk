@@ -1,17 +1,17 @@
 {
-	"name":"administrator/severless-sdk",
+	"name":"duoguan/severless-sdk",
 	"description":"阿里云serverless-sdk",
-    "type":"library",
-    "version":"1.0.0",
+	"type":"library",
+	"version":"1.0.0",
 	"authors":[
 		{
 			"name":"晋",
-			"email":"1540175452@qq.com"
+			"email":"657306123@qq.com"
 		}
 	],
 	"autoload":{
 		"psr-4":{
-			"xin\\serverless\\":"src/"
+			"duoguan\\aliyun\\serverless\\":"src/"
 		}
 	},
 	"license":"Apache-2.0",
@@ -28,10 +28,10 @@
 		"xin/container":"^2.0",
 		"guzzlehttp/guzzle":"^6.3"
 	},
-	"repositories": {
-		"packagist": {
-			"type": "composer",
-			"url": "https://mirrors.aliyun.com/composer/"
+	"repositories":{
+		"packagist":{
+			"type":"composer",
+			"url":"https://mirrors.aliyun.com/composer/"
 		}
 	}
 }

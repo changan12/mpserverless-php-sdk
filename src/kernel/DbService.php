@@ -6,397 +6,431 @@
  * @date: 2019/10/14 18:56
  */
 
-namespace xin\serverless\kernel;
+namespace duoguan\aliyun\serverless\kernel;
 
-class DbService
-{
+/**
+ * Class DbService
+ *
+ * @package duoguan\aliyun\serverless\kernel
+ */
+class DbService{
 
-    /**
-     * @var \xin\serverless\Serverless
-     */
-    protected $serverless;
+	/**
+	 * 服务名称
+	 */
+	const SERVICE_NAME = "serverless.db.isv.execute";
 
-    /**
-     * DbService constructor.
-     *
-     * @param $serverless
-     */
-    public function __construct($serverless)
-    {
-        $this->serverless = $serverless;
-    }
+	/**
+	 * @var \duoguan\aliyun\serverless\Serverless
+	 */
+	protected $serverless;
 
-    private function request($params)
-    {
-        return $this->serverless->request([
-            'method' => 'serverless.db.isv.execute',
-            'params' => json_encode($params),
-        ]);
-    }
+	/**
+	 * DbService constructor.
+	 *
+	 * @param $serverless
+	 */
+	public function __construct($serverless){
+		$this->serverless = $serverless;
+	}
 
-    /**
-     * 插入一条
-     * @param $collection
-     * @param array $doc
-     * @param array $options
-     * @return string
-     */
-    public function insertOne($collection, $doc = [], $options = [])
-    {
-        return $this->request([
-            'command' => 'insertOne',
-            'collection' => $collection,
-            'doc' => empty($doc) ? new \stdClass() : $doc,
-            'options' => empty($options) ? new \stdClass() : $options,
-        ]);
-    }
+	/**
+	 * 执行数据库命令
+	 *
+	 * @param array $params
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	private function request($params){
+		return $this->serverless->request([
+			'method' => self::SERVICE_NAME,
+			'params' => json_encode($params),
+		]);
+	}
 
-    /**
-     * 插入多条
-     * @param $collection
-     * @param array $docs
-     * @param array $options
-     * @return string
-     */
-    public function insertMany($collection, $docs = [], $options = [])
-    {
-        return $this->request([
-            'command' => 'insertMany',
-            'collection' => $collection,
-            'docs' => empty($docs) ? new \stdClass() : $docs,
-            'options' => empty($options) ? new \stdClass() : $options,
-        ]);
-    }
+	/**
+	 * 插入一条
+	 *
+	 * @param string $collection
+	 * @param array  $doc
+	 * @param array  $options
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function insertOne($collection, $doc = [], $options = []){
+		return $this->request([
+			'command'    => 'insertOne',
+			'collection' => $collection,
+			'doc'        => empty($doc) ? new \stdClass() : $doc,
+			'options'    => empty($options) ? new \stdClass() : $options,
+		]);
+	}
 
-    /**
-     * 删除一条
-     * @param $collection
-     * @param array $filter
-     * @param array $options
-     * @return string
-     */
-    public function deleteOne($collection, $filter = [], $options = [])
-    {
-        return $this->request([
-            'command' => 'deleteOne',
-            'collection' => $collection,
-            'filter' => empty($filter) ? new \stdClass() : $filter,
-            'options' => empty($options) ? new \stdClass() : $options,
-        ]);
-    }
+	/**
+	 * 插入多条
+	 *
+	 * @param string $collection
+	 * @param array  $docs
+	 * @param array  $options
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function insertMany($collection, $docs = [], $options = []){
+		return $this->request([
+			'command'    => 'insertMany',
+			'collection' => $collection,
+			'docs'       => empty($docs) ? new \stdClass() : $docs,
+			'options'    => empty($options) ? new \stdClass() : $options,
+		]);
+	}
 
-    /**
-     * 删除多条
-     * @param $collection
-     * @param array $filter
-     * @param array $options
-     * @return string
-     */
-    public function deleteMany($collection, $filter = [], $options = [])
-    {
-        return $this->request([
-            'command' => 'deleteMany',
-            'collection' => $collection,
-            'filter' => empty($filter) ? new \stdClass() : $filter,
-            'options' => empty($options) ? new \stdClass() : $options,
-        ]);
-    }
+	/**
+	 * 删除一条
+	 *
+	 * @param string $collection
+	 * @param array  $filter
+	 * @param array  $options
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function deleteOne($collection, $filter = [], $options = []){
+		return $this->request([
+			'command'    => 'deleteOne',
+			'collection' => $collection,
+			'filter'     => empty($filter) ? new \stdClass() : $filter,
+			'options'    => empty($options) ? new \stdClass() : $options,
+		]);
+	}
 
-    /**
-     * 查找一条数据后删除
-     * @param $collection
-     * @param array $filter
-     * @param array $options
-     * @return string
-     */
-    public function findOneAndDelete($collection, $filter = [], $options = [])
-    {
-        return $this->request([
-            'command' => 'findOneAndDelete',
-            'collection' => $collection,
-            'filter' => empty($filter) ? new \stdClass() : $filter,
-            'options' => empty($options) ? new \stdClass() : $options,
-        ]);
-    }
+	/**
+	 * 删除多条
+	 *
+	 * @param string $collection
+	 * @param array  $filter
+	 * @param array  $options
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function deleteMany($collection, $filter = [], $options = []){
+		return $this->request([
+			'command'    => 'deleteMany',
+			'collection' => $collection,
+			'filter'     => empty($filter) ? new \stdClass() : $filter,
+			'options'    => empty($options) ? new \stdClass() : $options,
+		]);
+	}
 
-    /**
-     * 查找一条数据后更新
-     * @param $collection
-     * @param array $filter
-     * @param array $update
-     * @param array $options
-     * @return string
-     */
-    public function findOneAndUpdate($collection, $filter = [], $update = [], $options = [])
-    {
-        return $this->request([
-            'command' => 'findOneAndUpdate',
-            'collection' => $collection,
-            'update' => empty($update) ? new \stdClass() : $update,
-            'filter' => empty($filter) ? new \stdClass() : $filter,
-            'options' => empty($options) ? new \stdClass() : $options,
-        ]);
-    }
+	/**
+	 * 查找一条数据后删除
+	 *
+	 * @param string $collection
+	 * @param array  $filter
+	 * @param array  $options
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function findOneAndDelete($collection, $filter = [], $options = []){
+		return $this->request([
+			'command'    => 'findOneAndDelete',
+			'collection' => $collection,
+			'filter'     => empty($filter) ? new \stdClass() : $filter,
+			'options'    => empty($options) ? new \stdClass() : $options,
+		]);
+	}
 
+	/**
+	 * 查找一条数据后更新
+	 *
+	 * @param string $collection
+	 * @param array  $filter
+	 * @param array  $update
+	 * @param array  $options
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function findOneAndUpdate($collection, $filter = [], $update = [], $options = []){
+		return $this->request([
+			'command'    => 'findOneAndUpdate',
+			'collection' => $collection,
+			'update'     => empty($update) ? new \stdClass() : $update,
+			'filter'     => empty($filter) ? new \stdClass() : $filter,
+			'options'    => empty($options) ? new \stdClass() : $options,
+		]);
+	}
 
-    /**
-     * 更新一条数据
-     * @param $collection
-     * @param array $filter
-     * @param array $update
-     * @param array $options
-     * @return string
-     */
-    public function updateOne($collection, $filter = [], $update = [], $options = [])
-    {
-        return $this->request([
-            'command' => 'updateOne',
-            'collection' => $collection,
-            'update' => empty($update) ? new \stdClass() : $update,
-            'filter' => empty($filter) ? new \stdClass() : $filter,
-            'options' => empty($options) ? new \stdClass() : $options,
-        ]);
-    }
+	/**
+	 * 更新一条数据
+	 *
+	 * @param string $collection
+	 * @param array  $filter
+	 * @param array  $update
+	 * @param array  $options
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function updateOne($collection, $filter = [], $update = [], $options = []){
+		return $this->request([
+			'command'    => 'updateOne',
+			'collection' => $collection,
+			'update'     => empty($update) ? new \stdClass() : $update,
+			'filter'     => empty($filter) ? new \stdClass() : $filter,
+			'options'    => empty($options) ? new \stdClass() : $options,
+		]);
+	}
 
-    /**
-     * 更新多条数据
-     * @param $collection
-     * @param array $filter
-     * @param array $update
-     * @param array $options
-     * @return string
-     */
-    public function updateMany($collection, $filter = [], $update = [], $options = [])
-    {
-        return $this->request([
-            'command' => 'updateMany',
-            'collection' => $collection,
-            'update' => empty($update) ? new \stdClass() : $update,
-            'filter' => empty($filter) ? new \stdClass() : $filter,
-            'options' => empty($options) ? new \stdClass() : $options,
-        ]);
-    }
+	/**
+	 * 更新多条数据
+	 *
+	 * @param string $collection
+	 * @param array  $filter
+	 * @param array  $update
+	 * @param array  $options
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function updateMany($collection, $filter = [], $update = [], $options = []){
+		return $this->request([
+			'command'    => 'updateMany',
+			'collection' => $collection,
+			'update'     => empty($update) ? new \stdClass() : $update,
+			'filter'     => empty($filter) ? new \stdClass() : $filter,
+			'options'    => empty($options) ? new \stdClass() : $options,
+		]);
+	}
 
-    /**
-     * 查找一条数据后替换
-     * @param $collection
-     * @param array $filter
-     * @param array $replacement
-     * @param array $options
-     * @return string
-     */
-    public function findOneAndReplace($collection, $filter = [], $replacement = [], $options = [])
-    {
-        return $this->request([
-            'command' => 'findOneAndReplace',
-            'collection' => $collection,
-            'filter' => empty($filter) ? new \stdClass() : $filter,
-            'replacement' => empty($replacement) ? new \stdClass() : $replacement,
-            'options' => empty($options) ? new \stdClass() : $options,
-        ]);
-    }
+	/**
+	 * 查找一条数据后替换
+	 *
+	 * @param string $collection
+	 * @param array  $filter
+	 * @param array  $replacement
+	 * @param array  $options
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function findOneAndReplace($collection, $filter = [], $replacement = [], $options = []){
+		return $this->request([
+			'command'     => 'findOneAndReplace',
+			'collection'  => $collection,
+			'filter'      => empty($filter) ? new \stdClass() : $filter,
+			'replacement' => empty($replacement) ? new \stdClass() : $replacement,
+			'options'     => empty($options) ? new \stdClass() : $options,
+		]);
+	}
 
-    /**
-     * 替换一条
-     * @param $collection
-     * @param array $filter
-     * @param array $doc
-     * @param array $options
-     * @return string
-     */
-    public function replaceOne($collection, $filter = [], $doc = [], $options = [])
-    {
-        return $this->request([
-            'command' => 'replaceOne',
-            'collection' => $collection,
-            'filter' => empty($filter) ? new \stdClass() : $filter,
-            'doc' => empty($doc) ? new \stdClass() : $doc,
-            'options' => empty($options) ? new \stdClass() : $options,
-        ]);
-    }
+	/**
+	 * 替换一条
+	 *
+	 * @param string $collection
+	 * @param array  $filter
+	 * @param array  $doc
+	 * @param array  $options
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function replaceOne($collection, $filter = [], $doc = [], $options = []){
+		return $this->request([
+			'command'    => 'replaceOne',
+			'collection' => $collection,
+			'filter'     => empty($filter) ? new \stdClass() : $filter,
+			'doc'        => empty($doc) ? new \stdClass() : $doc,
+			'options'    => empty($options) ? new \stdClass() : $options,
+		]);
+	}
 
+	/**
+	 * 查询一条
+	 *
+	 * @param string $collection
+	 * @param array  $query
+	 * @param array  $options
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function findOne($collection, $query = [], $options = []){
+		return $this->request([
+			'command'    => 'findOne',
+			'collection' => $collection,
+			'query'      => empty($query) ? new \stdClass() : $query,
+			'options'    => empty($options) ? new \stdClass() : $options,
+		]);
+	}
 
-    /**
-     * 查询一条
-     * @param $collection
-     * @param array $query
-     * @param array $options
-     * @return string
-     */
-    public function findOne($collection, $query = [], $options = [])
-    {
-        return $this->request([
-            'command' => 'findOne',
-            'collection' => $collection,
-            'query' => empty($query) ? new \stdClass() : $query,
-            'options' => empty($options) ? new \stdClass() : $options,
-        ]);
-    }
+	/**
+	 * 查询所有
+	 *
+	 * @param string $collection
+	 * @param array  $query
+	 * @param array  $options
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function find($collection, $query = [], $options = []){
+		return $this->request([
+			'command'    => 'find',
+			'collection' => $collection,
+			'query'      => empty($query) ? new \stdClass() : $query,
+			'options'    => empty($options) ? new \stdClass() : $options,
+		]);
+	}
 
-    /**
-     * 查询所有
-     * @param $collection
-     * @param array $query
-     * @param array $options
-     * @return string
-     */
-    public function find($collection, $query = [], $options = [])
-    {
-        return $this->request([
-            'command' => 'find',
-            'collection' => $collection,
-            'query' => empty($query) ? new \stdClass() : $query,
-            'options' => empty($options) ? new \stdClass() : $options,
-        ]);
-    }
+	/**
+	 * 聚合
+	 *
+	 * @param string $collection
+	 * @param array  $pipeline
+	 * @param array  $options
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function aggregate($collection, $pipeline = [], $options = []){
+		return $this->request([
+			'command'    => 'aggregate',
+			'collection' => $collection,
+			'pipeline'   => empty($pipeline) ? new \stdClass() : $pipeline,
+			'options'    => empty($options) ? new \stdClass() : $options,
+		]);
+	}
 
-    /**
-     * 聚合
-     * @param $collection
-     * @param array $pipeline
-     * @param array $options
-     * @return string
-     */
-    public function aggregate($collection, $pipeline = [], $options = [])
-    {
-        return $this->request([
-            'command' => 'aggregate',
-            'collection' => $collection,
-            'pipeline' => empty($pipeline) ? new \stdClass() : $pipeline,
-            'options' => empty($options) ? new \stdClass() : $options,
-        ]);
-    }
+	/**
+	 * 统计数量
+	 *
+	 * @param string $collection
+	 * @param array  $query
+	 * @param array  $options
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function count($collection, $query = [], $options = []){
+		return $this->request([
+			'command'    => 'count',
+			'collection' => $collection,
+			'query'      => empty($query) ? new \stdClass() : $query,
+			'options'    => empty($options) ? new \stdClass() : $options,
+		]);
+	}
 
-    /**
-     * 统计数量
-     * @param $collection
-     * @param array $query
-     * @param array $options
-     * @return string
-     */
-    public function count($collection, $query = [], $options = [])
-    {
-        return $this->request([
-            'command' => 'count',
-            'collection' => $collection,
-            'query' => empty($query) ? new \stdClass() : $query,
-            'options' => empty($options) ? new \stdClass() : $options,
-        ]);
-    }
+	/**
+	 * 返回唯一不同的值
+	 *
+	 * @param string $collection
+	 * @param string $key
+	 * @param array  $query
+	 * @param array  $options
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function distinct($collection, $key, $query = [], $options = []){
+		return $this->request([
+			'command'    => 'distinct',
+			'collection' => $collection,
+			'key'        => $key,
+			'query'      => empty($query) ? new \stdClass() : $query,
+			'options'    => empty($options) ? new \stdClass() : $options,
+		]);
+	}
 
-    /**
-     * 返回唯一不同的值
-     * @param $collection
-     * @param $key
-     * @param array $query
-     * @param array $options
-     * @return string
-     */
-    public function distinct($collection, $key, $query = [], $options = [])
-    {
-        return $this->request([
-            'command' => 'distinct',
-            'collection' => $collection,
-            'key' => $key,
-            'query' => empty($query) ? new \stdClass() : $query,
-            'options' => empty($options) ? new \stdClass() : $options,
-        ]);
-    }
+	/**
+	 * 创建索引
+	 *
+	 * @param string $collection
+	 * @param string $field
+	 * @param array  $options
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function createIndex($collection, $field, $options = []){
+		return $this->request([
+			'command'    => 'createIndex',
+			'collection' => $collection,
+			'field'      => empty($field) ? new \stdClass() : $field,
+			'options'    => empty($options) ? new \stdClass() : $options,
+		]);
+	}
 
-    /**
-     * 创建索引
-     * @param $collection
-     * @param $field
-     * @param array $options
-     * @return string
-     */
-    public function createIndex($collection, $field, $options = [])
-    {
-        return $this->request([
-            'command' => 'createIndex',
-            'collection' => $collection,
-            'field' => empty($field) ? new \stdClass() : $field,
-            'options' => empty($options) ? new \stdClass() : $options,
-        ]);
-    }
+	/**
+	 * 查询索引
+	 *
+	 * @param string $collection
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function listIndexes($collection){
+		return $this->request([
+			'command'    => 'listIndexes',
+			'collection' => $collection,
+		]);
+	}
 
-    /**
-     * 查询索引
-     * @param $collection
-     * @return string
-     */
-    public function listIndexes($collection)
-    {
-        return $this->request([
-            'command' => 'listIndexes',
-            'collection' => $collection,
-        ]);
-    }
+	/**
+	 * 删除索引
+	 *
+	 * @param string $collection
+	 * @param string $indexName
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function dropIndex($collection, $indexName){
+		return $this->request([
+			'command'    => 'dropIndex',
+			'indexName'  => empty($indexName) ? new \stdClass() : $indexName,
+			'collection' => $collection,
+		]);
+	}
 
-    /**
-     * 删除索引
-     * @param $collection
-     * @param $indexName
-     * @return string
-     */
-    public function dropIndex($collection, $indexName)
-    {
-        return $this->request([
-            'command' => 'dropIndex',
-            'indexName' => empty($indexName) ? new \stdClass() : $indexName,
-            'collection' => $collection,
-        ]);
-    }
+	/**
+	 * 创建集合
+	 *
+	 * @param string $name
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function createCollection($name){
+		return $this->request([
+			'command' => 'createCollection',
+			'name'    => $name,
+		]);
+	}
 
-    /**
-     * 创建集合
-     * @param $name
-     * @return string
-     */
-    public function createCollection($name)
-    {
-        return $this->request([
-            'command' => 'createCollection',
-            'name' => $name,
-        ]);
-    }
+	/**
+	 * 查询集合
+	 *
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function findCollection(){
+		return $this->request([
+			'command' => 'collections',
+		]);
+	}
 
-    /**
-     * 查询集合
-     * @return string
-     */
-    public function findCollection()
-    {
-        return $this->request([
-            'command' => 'collections',
-        ]);
-    }
+	/**
+	 * 删除集合
+	 *
+	 * @param string $collection
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function dropCollection($collection){
+		return $this->request([
+			'command'    => 'drop',
+			'collection' => $collection,
+		]);
+	}
 
-    /**
-     * 删除集合
-     * @param $collection
-     * @return string
-     */
-    public function dropCollection($collection)
-    {
-        return $this->request([
-            'command' => 'drop',
-            'collection' => $collection,
-        ]);
-    }
-
-    /**
-     * 重命名集合
-     * @param $collection
-     * @param $newName
-     * @return string
-     */
-    public function renameCollection($collection, $newName)
-    {
-        return $this->request([
-            'command' => 'rename',
-            'newName' => empty($newName) ? new \stdClass() : $newName,
-            'collection' => $collection,
-        ]);
-    }
+	/**
+	 * 重命名集合
+	 *
+	 * @param string $collection
+	 * @param string $newName
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function renameCollection($collection, $newName){
+		return $this->request([
+			'command'    => 'rename',
+			'newName'    => empty($newName) ? new \stdClass() : $newName,
+			'collection' => $collection,
+		]);
+	}
 }
