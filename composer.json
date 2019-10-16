@@ -14,9 +14,6 @@
 			"duoguan\\aliyun\\serverless\\":"src/"
 		}
 	},
-	"config":{
-		"secure-http":false
-	},
 	"license":"Apache-2.0",
 	"minimum-stability":"stable",
 	"require":{
