@@ -38,7 +38,7 @@ class DbService{
 	 * 执行数据库命令
 	 *
 	 * @param array $params
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	private function request($params){
@@ -54,7 +54,7 @@ class DbService{
 	 * @param string $collection
 	 * @param array  $doc
 	 * @param array  $options
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function insertOne($collection, $doc = [], $options = []){
@@ -72,7 +72,7 @@ class DbService{
 	 * @param string $collection
 	 * @param array  $docs
 	 * @param array  $options
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function insertMany($collection, $docs = [], $options = []){
@@ -90,7 +90,7 @@ class DbService{
 	 * @param string $collection
 	 * @param array  $filter
 	 * @param array  $options
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function deleteOne($collection, $filter = [], $options = []){
@@ -108,7 +108,7 @@ class DbService{
 	 * @param string $collection
 	 * @param array  $filter
 	 * @param array  $options
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function deleteMany($collection, $filter = [], $options = []){
@@ -126,7 +126,7 @@ class DbService{
 	 * @param string $collection
 	 * @param array  $filter
 	 * @param array  $options
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function findOneAndDelete($collection, $filter = [], $options = []){
@@ -145,7 +145,7 @@ class DbService{
 	 * @param array  $filter
 	 * @param array  $update
 	 * @param array  $options
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function findOneAndUpdate($collection, $filter = [], $update = [], $options = []){
@@ -165,7 +165,7 @@ class DbService{
 	 * @param array  $filter
 	 * @param array  $update
 	 * @param array  $options
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function updateOne($collection, $filter = [], $update = [], $options = []){
@@ -185,7 +185,7 @@ class DbService{
 	 * @param array  $filter
 	 * @param array  $update
 	 * @param array  $options
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function updateMany($collection, $filter = [], $update = [], $options = []){
@@ -205,7 +205,7 @@ class DbService{
 	 * @param array  $filter
 	 * @param array  $replacement
 	 * @param array  $options
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function findOneAndReplace($collection, $filter = [], $replacement = [], $options = []){
@@ -225,7 +225,7 @@ class DbService{
 	 * @param array  $filter
 	 * @param array  $doc
 	 * @param array  $options
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function replaceOne($collection, $filter = [], $doc = [], $options = []){
@@ -244,7 +244,7 @@ class DbService{
 	 * @param string $collection
 	 * @param array  $query
 	 * @param array  $options
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function findOne($collection, $query = [], $options = []){
@@ -262,7 +262,7 @@ class DbService{
 	 * @param string $collection
 	 * @param array  $query
 	 * @param array  $options
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function find($collection, $query = [], $options = []){
@@ -280,7 +280,7 @@ class DbService{
 	 * @param string $collection
 	 * @param array  $pipeline
 	 * @param array  $options
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function aggregate($collection, $pipeline = [], $options = []){
@@ -298,7 +298,7 @@ class DbService{
 	 * @param string $collection
 	 * @param array  $query
 	 * @param array  $options
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function count($collection, $query = [], $options = []){
@@ -317,7 +317,7 @@ class DbService{
 	 * @param string $key
 	 * @param array  $query
 	 * @param array  $options
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function distinct($collection, $key, $query = [], $options = []){
@@ -336,7 +336,7 @@ class DbService{
 	 * @param string $collection
 	 * @param string $field
 	 * @param array  $options
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function createIndex($collection, $field, $options = []){
@@ -352,7 +352,7 @@ class DbService{
 	 * 查询索引
 	 *
 	 * @param string $collection
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function listIndexes($collection){
@@ -367,7 +367,7 @@ class DbService{
 	 *
 	 * @param string $collection
 	 * @param string $indexName
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function dropIndex($collection, $indexName){
@@ -382,7 +382,7 @@ class DbService{
 	 * 创建集合
 	 *
 	 * @param string $name
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function createCollection($name){
@@ -395,7 +395,7 @@ class DbService{
 	/**
 	 * 查询集合
 	 *
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function findCollection(){
@@ -408,7 +408,7 @@ class DbService{
 	 * 删除集合
 	 *
 	 * @param string $collection
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function dropCollection($collection){
@@ -423,7 +423,7 @@ class DbService{
 	 *
 	 * @param string $collection
 	 * @param string $newName
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function renameCollection($collection, $newName){

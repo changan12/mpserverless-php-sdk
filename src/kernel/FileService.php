@@ -33,7 +33,7 @@ class FileService{
 	 * 删除文件
 	 *
 	 * @param string $id
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function fileDelete($id){
@@ -50,7 +50,7 @@ class FileService{
 	 *
 	 * @param string $id
 	 * @param string $contentType
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function fileReport($id, $contentType){
@@ -70,7 +70,7 @@ class FileService{
 	 * @param string $filename
 	 * @param int    $size
 	 * @param string $targetPath
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function fileGenerateProximalSign($env, $filename, $size, $targetPath){

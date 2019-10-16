@@ -36,7 +36,7 @@ class CloudCallService{
 
 	/**
 	 * @param $params
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	private function request($params){
@@ -51,7 +51,7 @@ class CloudCallService{
 	 *
 	 * @param string $functionTarget
 	 * @param array  $functionArgs
-	 * @return string
+	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function invoke($functionTarget, $functionArgs){
