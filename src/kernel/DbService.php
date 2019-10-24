@@ -8,6 +8,8 @@
 
 namespace duoguan\aliyun\serverless\kernel;
 
+use duoguan\aliyun\serverless\core\DbCollection;
+
 /**
  * Class DbService
  *
@@ -432,5 +434,15 @@ class DbService{
 			'newName'    => empty($newName) ? new \stdClass() : $newName,
 			'collection' => $collection,
 		]);
+	}
+
+	/**
+	 * 获取集合实例
+	 *
+	 * @param string $name
+	 * @return \duoguan\aliyun\serverless\core\DbCollection
+	 */
+	public function collection($name){
+		return new DbCollection($this, $name);
 	}
 }
