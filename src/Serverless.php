@@ -60,7 +60,7 @@ class Serverless extends ProviderContainer{
 	 */
 	public function __construct($config){
 		parent::__construct();
-		
+
 		$clientConfig = isset($config['client']) ? $config['client'] : [];
 		$this->httpClient = new Client(array_merge([
 			'base_uri' => self::GATEWAY_URL,
@@ -108,6 +108,15 @@ class Serverless extends ProviderContainer{
 	}
 
 	/**
+	 * 是否是否抛出异常
+	 *
+	 * @return bool|mixed
+	 */
+	public function isFailException(){
+		return isset($this->config['failException']) ? $this->config['failException'] : false;
+	}
+
+	/**
 	 * 打印日志
 	 *
 	 * @param string $content
@@ -151,6 +160,12 @@ class Serverless extends ProviderContainer{
 
 		$result = $response->getBody()->getContents();
 		$result = json_decode($result, true);
+
+		if($this->isFailException()){
+			if(isset($result['success']) && !$result['success']){
+				throw new ServerlessException($result['error']['message'], 400040);
+			}
+		}
 
 		return $result;
 	}

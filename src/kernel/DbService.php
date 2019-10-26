@@ -32,7 +32,7 @@ class DbService extends BaseService{
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function insertOne($collection, $doc = [], $options = []){
-		return $this->request([
+		return $this->request(self::SERVICE_NAME, [
 			'command'    => 'insertOne',
 			'collection' => $collection,
 			'doc'        => empty($doc) ? new \stdClass() : $doc,
@@ -50,7 +50,7 @@ class DbService extends BaseService{
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function insertMany($collection, $docs = [], $options = []){
-		return $this->request([
+		return $this->request(self::SERVICE_NAME, [
 			'command'    => 'insertMany',
 			'collection' => $collection,
 			'docs'       => empty($docs) ? new \stdClass() : $docs,
@@ -68,7 +68,7 @@ class DbService extends BaseService{
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function deleteOne($collection, $filter = [], $options = []){
-		return $this->request([
+		return $this->request(self::SERVICE_NAME, [
 			'command'    => 'deleteOne',
 			'collection' => $collection,
 			'filter'     => empty($filter) ? new \stdClass() : $filter,
@@ -86,7 +86,7 @@ class DbService extends BaseService{
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function deleteMany($collection, $filter = [], $options = []){
-		return $this->request([
+		return $this->request(self::SERVICE_NAME, [
 			'command'    => 'deleteMany',
 			'collection' => $collection,
 			'filter'     => empty($filter) ? new \stdClass() : $filter,
@@ -104,7 +104,7 @@ class DbService extends BaseService{
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function findOneAndDelete($collection, $filter = [], $options = []){
-		return $this->request([
+		return $this->request(self::SERVICE_NAME, [
 			'command'    => 'findOneAndDelete',
 			'collection' => $collection,
 			'filter'     => empty($filter) ? new \stdClass() : $filter,
@@ -123,7 +123,7 @@ class DbService extends BaseService{
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function findOneAndUpdate($collection, $filter = [], $update = [], $options = []){
-		return $this->request([
+		return $this->request(self::SERVICE_NAME, [
 			'command'    => 'findOneAndUpdate',
 			'collection' => $collection,
 			'update'     => empty($update) ? new \stdClass() : $update,
@@ -143,7 +143,7 @@ class DbService extends BaseService{
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function updateOne($collection, $filter = [], $update = [], $options = []){
-		return $this->request([
+		return $this->request(self::SERVICE_NAME, [
 			'command'    => 'updateOne',
 			'collection' => $collection,
 			'update'     => empty($update) ? new \stdClass() : $update,
@@ -163,7 +163,7 @@ class DbService extends BaseService{
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function updateMany($collection, $filter = [], $update = [], $options = []){
-		return $this->request([
+		return $this->request(self::SERVICE_NAME, [
 			'command'    => 'updateMany',
 			'collection' => $collection,
 			'update'     => empty($update) ? new \stdClass() : $update,
@@ -183,7 +183,7 @@ class DbService extends BaseService{
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function findOneAndReplace($collection, $filter = [], $replacement = [], $options = []){
-		return $this->request([
+		return $this->request(self::SERVICE_NAME, [
 			'command'     => 'findOneAndReplace',
 			'collection'  => $collection,
 			'filter'      => empty($filter) ? new \stdClass() : $filter,
@@ -203,7 +203,7 @@ class DbService extends BaseService{
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function replaceOne($collection, $filter = [], $doc = [], $options = []){
-		return $this->request([
+		return $this->request(self::SERVICE_NAME, [
 			'command'    => 'replaceOne',
 			'collection' => $collection,
 			'filter'     => empty($filter) ? new \stdClass() : $filter,
@@ -222,7 +222,7 @@ class DbService extends BaseService{
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function findOne($collection, $query = [], $options = []){
-		return $this->request([
+		return $this->request(self::SERVICE_NAME, [
 			'command'    => 'findOne',
 			'collection' => $collection,
 			'query'      => empty($query) ? new \stdClass() : $query,
@@ -240,7 +240,7 @@ class DbService extends BaseService{
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function find($collection, $query = [], $options = []){
-		return $this->request([
+		return $this->request(self::SERVICE_NAME, [
 			'command'    => 'find',
 			'collection' => $collection,
 			'query'      => empty($query) ? new \stdClass() : $query,
@@ -258,7 +258,7 @@ class DbService extends BaseService{
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function aggregate($collection, $pipeline = [], $options = []){
-		return $this->request([
+		return $this->request(self::SERVICE_NAME, [
 			'command'    => 'aggregate',
 			'collection' => $collection,
 			'pipeline'   => empty($pipeline) ? new \stdClass() : $pipeline,
@@ -276,7 +276,7 @@ class DbService extends BaseService{
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function count($collection, $query = [], $options = []){
-		return $this->request([
+		return $this->request(self::SERVICE_NAME, [
 			'command'    => 'count',
 			'collection' => $collection,
 			'query'      => empty($query) ? new \stdClass() : $query,
@@ -295,7 +295,7 @@ class DbService extends BaseService{
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function distinct($collection, $key, $query = [], $options = []){
-		return $this->request([
+		return $this->request(self::SERVICE_NAME, [
 			'command'    => 'distinct',
 			'collection' => $collection,
 			'key'        => $key,
@@ -312,16 +312,5 @@ class DbService extends BaseService{
 	 */
 	public function collection($name){
 		return new DbCollection($this, $name);
-	}
-
-	/**
-	 * 执行数据库命令
-	 *
-	 * @param array $params
-	 * @return array
-	 * @throws \duoguan\aliyun\serverless\ServerlessException
-	 */
-	protected function request($params){
-		return parent::request(self::SERVICE_NAME, $params);
 	}
 }
