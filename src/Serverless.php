@@ -8,7 +8,7 @@
 
 namespace duoguan\aliyun\serverless;
 
-use duoguan\aliyun\serverless\providers\CloudCallServiceProvider;
+use duoguan\aliyun\serverless\providers\CloudFuncServiceProvider;
 use duoguan\aliyun\serverless\providers\DbServiceProvider;
 use duoguan\aliyun\serverless\providers\FileServiceProvider;
 use GuzzleHttp\Client;
@@ -17,9 +17,12 @@ use xin\helper\Str;
 use xin\helper\Time;
 
 /**
- * @property \duoguan\aliyun\serverless\kernel\DbService        db
- * @property \duoguan\aliyun\serverless\kernel\CloudCallService cloud
- * @property \duoguan\aliyun\serverless\kernel\FileService      file
+ * Class Serverless
+ *
+ * @property-read \duoguan\aliyun\serverless\kernel\DbService        db
+ * @property-read \duoguan\aliyun\serverless\kernel\CloudFuncService func
+ * @property-read \duoguan\aliyun\serverless\kernel\FileService      file
+ * @package duoguan\aliyun\serverless
  */
 class Serverless extends ProviderContainer{
 
@@ -36,7 +39,7 @@ class Serverless extends ProviderContainer{
 	protected $providers
 		= [
 			DbServiceProvider::class,
-			CloudCallServiceProvider::class,
+			CloudFuncServiceProvider::class,
 			FileServiceProvider::class,
 		];
 
@@ -56,6 +59,8 @@ class Serverless extends ProviderContainer{
 	 * @param array $config
 	 */
 	public function __construct($config){
+		parent::__construct();
+		
 		$clientConfig = isset($config['client']) ? $config['client'] : [];
 		$this->httpClient = new Client(array_merge([
 			'base_uri' => self::GATEWAY_URL,

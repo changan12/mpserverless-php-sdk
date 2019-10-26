@@ -15,40 +15,12 @@ use duoguan\aliyun\serverless\core\DbCollection;
  *
  * @package duoguan\aliyun\serverless\kernel
  */
-class DbService{
+class DbService extends BaseService{
 
 	/**
 	 * 服务名称
 	 */
 	const SERVICE_NAME = "serverless.db.isv.execute";
-
-	/**
-	 * @var \duoguan\aliyun\serverless\Serverless
-	 */
-	protected $serverless;
-
-	/**
-	 * DbService constructor.
-	 *
-	 * @param $serverless
-	 */
-	public function __construct($serverless){
-		$this->serverless = $serverless;
-	}
-
-	/**
-	 * 执行数据库命令
-	 *
-	 * @param array $params
-	 * @return array
-	 * @throws \duoguan\aliyun\serverless\ServerlessException
-	 */
-	private function request($params){
-		return $this->serverless->request([
-			'method' => self::SERVICE_NAME,
-			'params' => json_encode($params),
-		]);
-	}
 
 	/**
 	 * 插入一条
@@ -333,110 +305,6 @@ class DbService{
 	}
 
 	/**
-	 * 创建索引
-	 *
-	 * @param string $collection
-	 * @param string $field
-	 * @param array  $options
-	 * @return array
-	 * @throws \duoguan\aliyun\serverless\ServerlessException
-	 */
-	public function createIndex($collection, $field, $options = []){
-		return $this->request([
-			'command'    => 'createIndex',
-			'collection' => $collection,
-			'field'      => empty($field) ? new \stdClass() : $field,
-			'options'    => empty($options) ? new \stdClass() : $options,
-		]);
-	}
-
-	/**
-	 * 查询索引
-	 *
-	 * @param string $collection
-	 * @return array
-	 * @throws \duoguan\aliyun\serverless\ServerlessException
-	 */
-	public function listIndexes($collection){
-		return $this->request([
-			'command'    => 'listIndexes',
-			'collection' => $collection,
-		]);
-	}
-
-	/**
-	 * 删除索引
-	 *
-	 * @param string $collection
-	 * @param string $indexName
-	 * @return array
-	 * @throws \duoguan\aliyun\serverless\ServerlessException
-	 */
-	public function dropIndex($collection, $indexName){
-		return $this->request([
-			'command'    => 'dropIndex',
-			'indexName'  => empty($indexName) ? new \stdClass() : $indexName,
-			'collection' => $collection,
-		]);
-	}
-
-	/**
-	 * 创建集合
-	 *
-	 * @param string $name
-	 * @return array
-	 * @throws \duoguan\aliyun\serverless\ServerlessException
-	 */
-	public function createCollection($name){
-		return $this->request([
-			'command' => 'createCollection',
-			'name'    => $name,
-		]);
-	}
-
-	/**
-	 * 查询集合
-	 *
-	 * @return array
-	 * @throws \duoguan\aliyun\serverless\ServerlessException
-	 */
-	public function findCollection(){
-		return $this->request([
-			'command' => 'collections',
-		]);
-	}
-
-	/**
-	 * 删除集合
-	 *
-	 * @param string $collection
-	 * @return array
-	 * @throws \duoguan\aliyun\serverless\ServerlessException
-	 */
-	public function dropCollection($collection){
-		return $this->request([
-			'command'    => 'drop',
-			'collection' => $collection,
-		]);
-	}
-
-	/**
-	 * 重命名集合
-	 *
-	 * @param string $collection
-	 * @param string $newName
-	 * @return array
-	 * @throws \duoguan\aliyun\serverless\ServerlessException
-	 */
-	public function renameCollection($collection, $newName){
-		return $this->request([
-			'command'    => 'rename',
-			'newName'    => empty($newName) ? new \stdClass() : $newName,
-			'collection' => $collection,
-		]);
-	}
-
-	/**
 	 * 获取集合实例
 	 *
 	 * @param string $name
@@ -444,5 +312,16 @@ class DbService{
 	 */
 	public function collection($name){
 		return new DbCollection($this, $name);
+	}
+
+	/**
+	 * 执行数据库命令
+	 *
+	 * @param array $params
+	 * @return array
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	protected function request($params){
+		return parent::request(self::SERVICE_NAME, $params);
 	}
 }

@@ -9,42 +9,16 @@
 namespace duoguan\aliyun\serverless\kernel;
 
 /**
- * Class CloudCallService
+ * Class CloudFuncService
  *
  * @package duoguan\aliyun\serverless\kernel
  */
-class CloudCallService{
+class CloudFuncService extends BaseService{
 
 	/**
 	 * 服务名称
 	 */
 	const SERVICE_NAME = "serverless.function.isv.runtime.invoke";
-
-	/**
-	 * @var \duoguan\aliyun\serverless\Serverless
-	 */
-	protected $serverless;
-
-	/**
-	 * CloudCallService constructor.
-	 *
-	 * @param $serverless
-	 */
-	public function __construct($serverless){
-		$this->serverless = $serverless;
-	}
-
-	/**
-	 * @param $params
-	 * @return array
-	 * @throws \duoguan\aliyun\serverless\ServerlessException
-	 */
-	private function request($params){
-		return $this->serverless->request([
-			'method' => self::SERVICE_NAME,
-			'params' => json_encode($params),
-		]);
-	}
 
 	/**
 	 * 调用云函数
@@ -55,7 +29,7 @@ class CloudCallService{
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function invoke($functionTarget, $functionArgs){
-		return $this->request([
+		return $this->request(self::SERVICE_NAME, [
 			'functionTarget' => $functionTarget,
 			'functionArgs'   => empty($functionArgs) ? new \stdClass() : $functionArgs,
 		]);
