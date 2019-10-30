@@ -29,9 +29,9 @@ class Serverless extends ProviderContainer{
 	/**
 	 * 网关地址
 	 */
-	const GATEWAY_URL = "http://39.98.106.113/server";
+//	const GATEWAY_URL = "http://39.98.106.113/server";
 
-	//	const GATEWAY_URL = "https://api.bspapp.com/server";
+    const GATEWAY_URL = "https://api.bspapp.com/server";
 
 	/**
 	 * @var array
@@ -163,7 +163,7 @@ class Serverless extends ProviderContainer{
 
 		if($this->isFailException()){
 			if(isset($result['success']) && !$result['success']){
-				throw new ServerlessException($result['error']['message'], 400040);
+                throw new ServerlessException($result['error']['message'] . "(" . $result['code'] . ")", 400040);
 			}
 		}
 

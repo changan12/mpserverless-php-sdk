@@ -2,7 +2,7 @@
 	"name":"duoguan/severless-sdk",
 	"description":"阿里云serverless-sdk",
 	"type":"library",
-	"version":"1.0.5",
+	"version":"1.0.7",
 	"authors":[
 		{
 			"name":"晋",
