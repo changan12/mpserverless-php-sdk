@@ -31,8 +31,9 @@ class Serverless extends ProviderContainer{
 	 */
 //	const GATEWAY_URL = "http://39.98.106.113/server";
 
-    const GATEWAY_URL = "https://api.bspapp.com/server";
+//    const GATEWAY_URL = "https://api.bspapp.com/server";
 
+    const GATEWAY_URL = "https://api-pre.bspapp.com/server";
 	/**
 	 * @var array
 	 */
