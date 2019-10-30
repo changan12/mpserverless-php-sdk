@@ -27,14 +27,6 @@ use xin\helper\Time;
 class Serverless extends ProviderContainer{
 
 	/**
-	 * 网关地址
-	 */
-//	const GATEWAY_URL = "http://39.98.106.113/server";
-
-//    const GATEWAY_URL = "https://api.bspapp.com/server";
-
-    const GATEWAY_URL = "https://api-pre.bspapp.com/server";
-	/**
 	 * @var array
 	 */
 	protected $providers
@@ -64,7 +56,6 @@ class Serverless extends ProviderContainer{
 
 		$clientConfig = isset($config['client']) ? $config['client'] : [];
 		$this->httpClient = new Client(array_merge([
-			'base_uri' => self::GATEWAY_URL,
 			'timeout'  => 2.0,
 		], $clientConfig));
 
@@ -117,6 +108,15 @@ class Serverless extends ProviderContainer{
 		return isset($this->config['failException']) ? $this->config['failException'] : false;
 	}
 
+    /**
+     * 是否是开发模式
+     * @return bool
+     */
+    public function isDebug()
+    {
+        return isset($this->config['debug']) ? $this->config['debug'] : false;
+	}
+
 	/**
 	 * 打印日志
 	 *
@@ -157,19 +157,27 @@ class Serverless extends ProviderContainer{
 			],
 			'form_params' => $data,
 		];
-		$response = $this->httpClient->post('', $options);
+		$response = $this->httpClient->post($this->getGatewayUrl(), $options);
 
 		$result = $response->getBody()->getContents();
 		$result = json_decode($result, true);
 
 		if($this->isFailException()){
 			if(isset($result['success']) && !$result['success']){
-                throw new ServerlessException($result['error']['message'] . "(" . $result['code'] . ")", 400040);
+                throw new ServerlessException($result['error']['message'] . "(" . $result['error']['code'] . ")", 400040);
 			}
 		}
 
 		return $result;
 	}
+
+    /**
+     * 获取网关地址
+     * @return string
+     */
+	protected function getGatewayUrl(){
+	    return $this->isDebug()?"https://api-pre.bspapp.com/server":"https://api.bspapp.com/server";
+    }
 
 	/**
 	 * 制作签名
