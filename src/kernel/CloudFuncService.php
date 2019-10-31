@@ -28,7 +28,7 @@ class CloudFuncService extends BaseService{
 	 * @return array
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
-	public function invoke($functionTarget, $functionArgs){
+	public function invoke($functionTarget, $functionArgs = []){
 		return $this->request(self::SERVICE_NAME, [
 			'functionTarget' => $functionTarget,
 			'functionArgs'   => empty($functionArgs) ? new \stdClass() : $functionArgs,
