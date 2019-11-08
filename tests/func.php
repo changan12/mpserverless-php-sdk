@@ -2,11 +2,11 @@
 /**
  * The following code, none of which has BUG.
  *
- * @author: BD<liuxingwu@duoguan.com>
- * @date: 2019/10/15 11:08
+ * @author: BD<657306123@qq.com>
+ * @date: 2019/11/8 18:09
  */
-
 use duoguan\aliyun\serverless\Serverless;
+use duoguan\aliyun\serverless\ServerlessException;
 
 require_once '../vendor/autoload.php';
 
@@ -18,47 +18,10 @@ MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQD3tIgxdoLuxtJjzXQo8sLHAx8YcW0g
 	'failException' => true,
 ]);
 
-$db = $serverless->db;
-
-// 插入数据
-$res = $db->insertOne('test', [
-	'title'   => '最好用的severless-sdk',
-	'content' => '最好用的severless-sdk',
-]);
-$newInsertedId = $res['data']['result']['insertedId'];
-var_dump($newInsertedId);
-
-// 查询数据
-$res = $db->findOne('test', [
-	'_id' => $newInsertedId,
-]);
-var_dump($res);
-
-$res = $db->find('test');
-var_dump($res);
-
-// 更新数据
-$insertedId = $res['data']['result'][0]['_id'];
-$res = $db->updateOne('test', [
-	'_id' => $newInsertedId,
-], [
-	'$set' => [
-		'update_at' => time(),
-	],
-]);
-var_dump($res);
-
-// 查询数据
-$res = $db->findOne('test', [
-	'_id' => $newInsertedId,
-]);
-var_dump($res);
-
-// 删除数据
-$res = $db->deleteOne('test', [
-	'_id' => $insertedId,
-]);
-var_dump($res);
-
-//$res = $serverless->db->listIndexes('test-duoguan');
-//var_dump($res);
+$func = $serverless->func;
+try{
+	$result = $func->invoke('hello', ['world']);
+	var_dump($result);
+}catch(ServerlessException $e){
+	echo $e->getMessage();
+}

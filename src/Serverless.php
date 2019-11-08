@@ -8,10 +8,15 @@
 
 namespace duoguan\aliyun\serverless;
 
+use duoguan\aliyun\serverless\logger\EmptyLogger;
 use duoguan\aliyun\serverless\providers\CloudFuncServiceProvider;
 use duoguan\aliyun\serverless\providers\DbServiceProvider;
 use duoguan\aliyun\serverless\providers\FileServiceProvider;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LoggerInterface;
 use xin\container\ProviderContainer;
 use xin\helper\Str;
 use xin\helper\Time;
@@ -24,7 +29,9 @@ use xin\helper\Time;
  * @property-read \duoguan\aliyun\serverless\kernel\FileService      file
  * @package duoguan\aliyun\serverless
  */
-class Serverless extends ProviderContainer{
+class Serverless extends ProviderContainer implements LoggerAwareInterface{
+
+	use LoggerAwareTrait;
 
 	/**
 	 * @var array
@@ -56,7 +63,7 @@ class Serverless extends ProviderContainer{
 
 		$clientConfig = isset($config['client']) ? $config['client'] : [];
 		$this->httpClient = new Client(array_merge([
-			'timeout'  => 2.0,
+			'timeout' => 2,
 		], $clientConfig));
 
 		$this->config = $config;
@@ -91,12 +98,33 @@ class Serverless extends ProviderContainer{
 	}
 
 	/**
-	 * 是否打印日志
+	 * 获取网关地址
 	 *
-	 * @return bool|mixed
+	 * @return string
 	 */
-	protected function isPrintLog(){
-		return isset($this->config['is_print_log']) ? $this->config['is_print_log'] : false;
+	public function getGatewayUrl(){
+		return $this->isDebug() ? "https://api-pre.bspapp.com/server" : "https://api.bspapp.com/server";
+	}
+
+	/**
+	 * 获取日志记录器
+	 *
+	 * @return LoggerInterface
+	 */
+	public function getLogger(){
+		if(is_null($this->logger)){
+			$this->logger = new EmptyLogger();
+		}
+		return $this->logger;
+	}
+
+	/**
+	 * 是否是开发模式
+	 *
+	 * @return bool
+	 */
+	public function isDebug(){
+		return isset($this->config['debug']) ? $this->config['debug'] : false;
 	}
 
 	/**
@@ -108,29 +136,6 @@ class Serverless extends ProviderContainer{
 		return isset($this->config['failException']) ? $this->config['failException'] : false;
 	}
 
-    /**
-     * 是否是开发模式
-     * @return bool
-     */
-    public function isDebug()
-    {
-        return isset($this->config['debug']) ? $this->config['debug'] : false;
-	}
-
-	/**
-	 * 打印日志
-	 *
-	 * @param string $content
-	 */
-	protected function log($content){
-		if($this->isPrintLog()){
-			if(!is_scalar($content)){
-				$content = json_encode($content, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-			}
-			echo "{$content}\n";
-		}
-	}
-
 	/**
 	 * 请求
 	 *
@@ -139,45 +144,48 @@ class Serverless extends ProviderContainer{
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function request(array $data){
-		//		$data["spaceId"] = '655bc0ae-7dd0-4567-9083-4706bfea75e9'; // serverless spaceId
 		$data['spaceId'] = $this->getSpaceId();
-		$this->log("spaceId:{$data['spaceId']}");
 		$data["timestamp"] = Time::getMillisecond(); // 毫秒级别时间戳
 
 		$sign = self::makeSign($data, $this->getPrivateKey());
-		$this->log("sign:{$sign}");
-		if($this->isPrintLog()){
-			$dataStr = http_build_query($data);
-			$this->log("request body:{$dataStr}");
+		$this->getLogger()->debug("make sign : %s", [$sign]);
+
+		$dataStr = http_build_query($data);
+		$this->getLogger()->debug("request data : %s", [$dataStr]);
+
+		try{
+			$options = [
+				'headers'     => [
+					'X-Serverless-Sign' => $sign,
+				],
+				'form_params' => $data,
+			];
+
+			$response = $this->httpClient->post($this->getGatewayUrl(), $options);
+		}catch(RequestException $e){
+			$response = $e->hasResponse() ? $e->getResponse() : null;
+			$this->getLogger()->warning("bad request , request data : %s;response data : %s;", [
+				$e->getRequest(),
+				$response ? $response->getBody()->getContents() : "",
+			]);
+
+			if($this->isFailException()){
+				throw $e;
+			}
 		}
 
-		$options = [
-			'headers'     => [
-				'X-Serverless-Sign' => $sign,
-			],
-			'form_params' => $data,
-		];
-		$response = $this->httpClient->post($this->getGatewayUrl(), $options);
+		if(!$response) return null;
 
 		$result = $response->getBody()->getContents();
 		$result = json_decode($result, true);
-
 		if($this->isFailException()){
 			if(isset($result['success']) && !$result['success']){
-                throw new ServerlessException($result['error']['message'] . "(" . $result['error']['code'] . ")", 400040);
+				throw new ServerlessException($result['error']['message']."(".$result['error']['code'].")", 400040);
 			}
 		}
 
 		return $result;
 	}
-
-    /**
-     * 获取网关地址
-     * @return string
-     */
-	protected function getGatewayUrl(){
-	    return $this->isDebug()?"https://api-pre.bspapp.com/server":"https://api.bspapp.com/server";
-    }
 
 	/**
 	 * 制作签名
@@ -208,4 +216,5 @@ class Serverless extends ProviderContainer{
 
 		return bin2hex($signData);
 	}
+
 }
