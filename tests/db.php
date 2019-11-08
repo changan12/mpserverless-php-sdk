@@ -6,6 +6,7 @@
  * @date: 2019/10/15 11:08
  */
 
+use duoguan\aliyun\serverless\logger\PrintLogger;
 use duoguan\aliyun\serverless\Serverless;
 
 require_once '../vendor/autoload.php';
@@ -17,6 +18,7 @@ MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQD3tIgxdoLuxtJjzXQo8sLHAx8YcW0g
 -----END PRIVATE KEY-----',
 	'failException' => true,
 ]);
+$serverless->setLogger(new PrintLogger());
 
 $db = $serverless->db;
 

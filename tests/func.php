@@ -5,6 +5,7 @@
  * @author: BD<657306123@qq.com>
  * @date: 2019/11/8 18:09
  */
+use duoguan\aliyun\serverless\logger\PrintLogger;
 use duoguan\aliyun\serverless\Serverless;
 use duoguan\aliyun\serverless\ServerlessException;
 
@@ -17,6 +18,7 @@ MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQD3tIgxdoLuxtJjzXQo8sLHAx8YcW0g
 -----END PRIVATE KEY-----',
 	'failException' => true,
 ]);
+$serverless->setLogger(new PrintLogger());
 
 $func = $serverless->func;
 try{

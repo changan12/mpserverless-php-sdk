@@ -5,7 +5,7 @@
  * @author: BD<657306123@qq.com>
  * @date: 2019/11/8 13:48
  */
-use duoguan\aliyun\serverless\PrintLogger;
+use duoguan\aliyun\serverless\logger\PrintLogger;
 use duoguan\aliyun\serverless\Serverless;
 use duoguan\aliyun\serverless\ServerlessException;
 
@@ -23,6 +23,14 @@ $serverless->setLogger(new PrintLogger());
 try{
 	$file = $serverless->file;
 	$info = $file->putFile('public', "./000.jpg");
+	var_dump($info);
+}catch(ServerlessException $e){
+	echo $e->getMessage();
+}
+
+try{
+	$file = $serverless->file;
+	$info = $file->putData('public', "./000.jpg", file_get_contents("./000.jpg"));
 	var_dump($info);
 }catch(ServerlessException $e){
 	echo $e->getMessage();

@@ -113,13 +113,7 @@ class FileService{
 		try{
 			$this->upload($uploadInfo, $filename, fopen($filename, 'r'));
 		}catch(RequestException $e){
-			$request = $e->getRequest();
-			$request->getBody()->rewind();
-			$response = $e->hasResponse() ? $e->getResponse() : null;
-			$this->serverless->getLogger()->warning("bad request , request data : %s;response data : %s;", [
-				$request->getBody()->getContents(),
-				$response ? $response->getBody()->getContents() : "",
-			]);
+			$this->recordRequestException($e);
 
 			if($this->serverless->isFailException()){
 				throw $e;
@@ -134,6 +128,71 @@ class FileService{
 			return null;
 		}
 
+		return $this->buildSuccessResult($uploadInfo);
+	}
+
+	/**
+	 * 上传文件
+	 *
+	 * @param string $env
+	 * @param string $filename
+	 * @param mixed  $data
+	 * @return array|null
+	 * @throws \GuzzleHttp\Exception\GuzzleException
+	 * @throws \duoguan\aliyun\serverless\ServerlessException
+	 */
+	public function putData($env, $filename, $data){
+		// 获取预上传地址
+		$result = $this->fileGenerateProximalSign($env, $filename);
+		if(!$result || !$result['success']){
+			return null;
+		}
+
+		// 上传文件
+		$uploadInfo = $result['data'];
+		try{
+			$this->upload($uploadInfo, $filename, $data);
+		}catch(RequestException $e){
+			$this->recordRequestException($e);
+
+			if($this->serverless->isFailException()){
+				throw $e;
+			}else{
+				return null;
+			}
+		}
+
+		// 上报文件并入库
+		$result = $this->fileReport($uploadInfo['id']);
+		if(!$result || !$result['success']){
+			return null;
+		}
+
+		return $this->buildSuccessResult($uploadInfo);
+	}
+
+	/**
+	 * 记录异常记录
+	 *
+	 * @param \GuzzleHttp\Exception\RequestException $e
+	 */
+	private function recordRequestException(RequestException $e){
+		$request = $e->getRequest();
+		$request->getBody()->rewind();
+		$response = $e->hasResponse() ? $e->getResponse() : null;
+		$this->serverless->getLogger()->warning("bad request , request data : %s;response data : %s;", [
+			$request->getBody()->getContents(),
+			$response ? $response->getBody()->getContents() : "",
+		]);
+	}
+
+	/**
+	 * 编译上传后的结果
+	 *
+	 * @param array $uploadInfo
+	 * @return array
+	 */
+	private function buildSuccessResult(array $uploadInfo){
 		return [
 			"id"   => $uploadInfo['id'],
 			"path" => $uploadInfo['ossPath'],
