@@ -61,6 +61,3 @@ $res = $db->deleteOne('test', [
 	'_id' => $insertedId,
 ]);
 var_dump($res);
-
-//$res = $serverless->db->listIndexes('test-duoguan');
-//var_dump($res);
