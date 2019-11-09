@@ -275,10 +275,17 @@ class DbService extends BaseService{
 	public function findAndTotalRows($collection, array $query = [], array $options = []){
 		$result = $this->find($collection, $query, $options);
 		$totalRows = $this->count($collection, $query);
-		return [
+
+		$result = [
 			'data'      => $result,
 			'totalRows' => $totalRows,
 		];
+
+		if(isset($options['paginate']) && is_callable($options['paginate'])){
+			return call_user_func($options['paginate'], $result, $options);
+		}
+
+		return $result;
 	}
 
 	/**
