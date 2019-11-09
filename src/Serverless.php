@@ -63,7 +63,7 @@ class Serverless extends ProviderContainer implements LoggerAwareInterface{
 
 		$clientConfig = isset($config['client']) ? $config['client'] : [];
 		$this->httpClient = new Client(array_merge([
-			'timeout' => 2,
+			'timeout' => 5,
 		], $clientConfig));
 
 		$this->config = $config;
