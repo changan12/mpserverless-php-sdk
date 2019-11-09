@@ -103,30 +103,19 @@ class FileService{
 	 */
 	public function putFile($env, $filename){
 		// 获取预上传地址
-		$result = $this->fileGenerateProximalSign($env, $filename);
-		if(!$result || !$result['success']){
-			return null;
-		}
+		$uploadInfo = $this->fileGenerateProximalSign($env, $filename);
 
 		// 上传文件
-		$uploadInfo = $result['data'];
 		try{
 			$this->upload($uploadInfo, $filename, fopen($filename, 'r'));
 		}catch(RequestException $e){
 			$this->recordRequestException($e);
 
-			if($this->serverless->isFailException()){
-				throw $e;
-			}else{
-				return null;
-			}
+			throw $e;
 		}
 
 		// 上报文件并入库
-		$result = $this->fileReport($uploadInfo['id']);
-		if(!$result || !$result['success']){
-			return null;
-		}
+		$this->fileReport($uploadInfo['id']);
 
 		return $this->buildSuccessResult($uploadInfo);
 	}
@@ -143,30 +132,18 @@ class FileService{
 	 */
 	public function putData($env, $filename, $data){
 		// 获取预上传地址
-		$result = $this->fileGenerateProximalSign($env, $filename);
-		if(!$result || !$result['success']){
-			return null;
-		}
+		$uploadInfo = $this->fileGenerateProximalSign($env, $filename);
 
 		// 上传文件
-		$uploadInfo = $result['data'];
 		try{
 			$this->upload($uploadInfo, $filename, $data);
 		}catch(RequestException $e){
 			$this->recordRequestException($e);
-
-			if($this->serverless->isFailException()){
-				throw $e;
-			}else{
-				return null;
-			}
+			throw $e;
 		}
 
 		// 上报文件并入库
-		$result = $this->fileReport($uploadInfo['id']);
-		if(!$result || !$result['success']){
-			return null;
-		}
+		$this->fileReport($uploadInfo['id']);
 
 		return $this->buildSuccessResult($uploadInfo);
 	}

@@ -24,44 +24,125 @@ $serverless->setLogger(new PrintLogger());
 $db = $serverless->db;
 
 // 插入数据
-$res = $db->insertOne('test', [
+$newInsertedId = $db->insertOne('test', [
 	'title'   => '最好用的severless-sdk',
 	'content' => '最好用的severless-sdk',
 ]);
-$newInsertedId = $res['data']['result']['insertedId'];
-var_dump($newInsertedId);
+var_dump("insert Id:".$newInsertedId);
+
+// 插入多条数据
+$newInsertedIds = $db->insertMany('test', [
+	[
+		'title'   => '最好用的severless-sdk',
+		'content' => '最好用的severless-sdk',
+	],
+	[
+		'title'   => '最好用的severless-sdk',
+		'content' => '最好用的severless-sdk',
+	],
+]);
+var_dump($newInsertedIds);
 
 // 查询数据
-$res = $db->findOne('test', [
+$doc = $db->findOne('test', [
 	'_id' => $newInsertedId,
 ]);
-var_dump($res);
+var_dump($doc);
 
-$res = $db->find('test');
-var_dump($res);
+// 获取所有数据
+$docs = $db->find('test', [], [
+	'page' => 1,
+]);
+var_dump($docs);
 
 // 更新数据
-$insertedId = $res['data']['result'][0]['_id'];
-$res = $db->updateOne('test', [
-	'_id' => $newInsertedId,
+$updateId = $docs[0]['_id'];
+var_dump("update id:".$updateId);
+$updateCount = $db->updateOne('test', [
+	'_id' => $updateId,
 ], [
 	'$set' => [
 		'update_at' => time(),
 	],
 ]);
-var_dump($res);
+var_dump("update ".($updateCount ? 'success' : 'empty'));
 
-// 查询数据
-$res = $db->findOne('test', [
-	'_id' => $newInsertedId,
+// 更新多条数据
+$updateTotalCount = $db->updateMany('test', [
+	'update_at' => null,
+], [
+	'$set' => [
+		'update_at' => time(),
+	],
 ]);
-var_dump($res);
+var_dump("update count:{$updateTotalCount}");
+
+// 查找一条数据后更新
+$info = $db->findOneAndUpdate('test', [
+	'_id' => $updateId,
+], [
+	'$set' => [
+		'name' => '小明',
+		'uid'  => uniqid(),
+	],
+]);
+var_dump($info);
+
+// 查找一条数据后更新
+$info = $db->findOneAndReplace('test', [
+	'_id' => $updateId,
+], [
+	'name' => '小明',
+	'uid'  => uniqid(),
+]);
+var_dump($info);
+
+$info = $db->replaceOne('test', [
+	'_id' => $updateId,
+], [
+	'name' => '小红',
+	'uid'  => uniqid(),
+]);
+var_dump($info);
+
+// 查找一条数据后删除
+$info = $db->findOneAndDelete('test', [
+	'_id' => $updateId,
+]);
+var_dump($info);
+
+// 查找所有数据并返回总量
+$result = $db->findAndTotalRows('test', [], [
+	'limit' => 10,
+]);
+var_dump($result);
+
+// 查找唯一值
+$result = $db->distinct('test', 'update_at');
+var_dump($result);
+
+// 聚合查询
+$result = $db->aggregate('test', [
+	[
+		'$group' => [
+			'_id'          => '$update_at',
+			'num_tutorial' => [
+				'$sum' => '$likes',
+			],
+		],
+	],
+]);
+var_dump($result);
 
 // 删除数据
-$res = $db->deleteOne('test', [
-	'_id' => $insertedId,
+$deleteCount = $db->deleteOne('test', [
+	'_id' => $newInsertedId,
 ]);
-var_dump($res);
+var_dump($deleteCount);
+
+// 删除多条数据
+//$deleteCount = $db->deleteMany('test');
+//var_dump($deleteCount);
 ```
 
 **云函数调用**

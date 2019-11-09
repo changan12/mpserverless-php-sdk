@@ -28,10 +28,10 @@ try{
 	echo $e->getMessage();
 }
 
-try{
-	$file = $serverless->file;
-	$info = $file->putData('public', "./000.jpg", file_get_contents("./000.jpg"));
-	var_dump($info);
-}catch(ServerlessException $e){
-	echo $e->getMessage();
-}
+//try{
+//	$file = $serverless->file;
+//	$info = $file->putData('public', "./000.jpg", file_get_contents("./000.jpg"));
+//	var_dump($info);
+//}catch(ServerlessException $e){
+//	echo $e->getMessage();
+//}

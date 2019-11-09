@@ -128,15 +128,6 @@ class Serverless extends ProviderContainer implements LoggerAwareInterface{
 	}
 
 	/**
-	 * 是否是否抛出异常
-	 *
-	 * @return bool|mixed
-	 */
-	public function isFailException(){
-		return isset($this->config['failException']) ? $this->config['failException'] : false;
-	}
-
-	/**
 	 * 请求
 	 *
 	 * @param array $data
@@ -169,22 +160,16 @@ class Serverless extends ProviderContainer implements LoggerAwareInterface{
 				$response ? $response->getBody()->getContents() : "",
 			]);
 
-			if($this->isFailException()){
-				throw $e;
-			}
+			throw $e;
 		}
-
-		if(!$response) return null;
 
 		$result = $response->getBody()->getContents();
 		$result = json_decode($result, true);
-		if($this->isFailException()){
-			if(isset($result['success']) && !$result['success']){
-				throw new ServerlessException($result['error']['message']."(".$result['error']['code'].")", 400040);
-			}
+		if(isset($result['success']) && !$result['success']){
+			throw new ServerlessException($result['error']['message']."(".$result['error']['code'].")", 400040);
 		}
 
-		return $result;
+		return $result['data'];
 	}
 
 	/**
