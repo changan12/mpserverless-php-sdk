@@ -23,12 +23,13 @@ $serverless->setLogger(new PrintLogger());
 // 获取DB实例
 $db = $serverless->db;
 
+
 // 插入数据
 $newInsertedId = $db->insertOne('test', [
 	'title'   => '最好用的severless-sdk',
 	'content' => '最好用的severless-sdk',
 ]);
-var_dump("insert Id:".$newInsertedId);
+var_dump("insert Id:".$newInsertedId->value());
 
 // 插入多条数据
 $newInsertedIds = $db->insertMany('test', [
@@ -41,19 +42,20 @@ $newInsertedIds = $db->insertMany('test', [
 		'content' => '最好用的severless-sdk',
 	],
 ]);
-var_dump($newInsertedIds);
+var_dump($newInsertedIds->value());
 
 // 查询数据
 $doc = $db->findOne('test', [
-	'_id' => $newInsertedId,
+	'_id' => $newInsertedId->value(),
 ]);
-var_dump($doc);
+var_dump($doc->value());
 
 // 获取所有数据
 $docs = $db->find('test', [], [
-	'page' => 1,
+	'page'  => 1,
+	'limit' => 5,
 ]);
-var_dump($docs);
+var_dump($docs->value());
 
 // 更新数据
 $updateId = $docs[0]['_id'];
@@ -65,7 +67,7 @@ $updateCount = $db->updateOne('test', [
 		'update_at' => time(),
 	],
 ]);
-var_dump("update ".($updateCount ? 'success' : 'empty'));
+var_dump("update ".($updateCount->value() ? 'success' : 'empty'));
 
 // 更新多条数据
 $updateTotalCount = $db->updateMany('test', [
@@ -75,7 +77,7 @@ $updateTotalCount = $db->updateMany('test', [
 		'update_at' => time(),
 	],
 ]);
-var_dump("update count:{$updateTotalCount}");
+var_dump("update count:{$updateTotalCount->value()}");
 
 // 查找一条数据后更新
 $info = $db->findOneAndUpdate('test', [
@@ -86,7 +88,7 @@ $info = $db->findOneAndUpdate('test', [
 		'uid'  => uniqid(),
 	],
 ]);
-var_dump($info);
+var_dump($info->value());
 
 // 查找一条数据后更新
 $info = $db->findOneAndReplace('test', [
@@ -95,7 +97,7 @@ $info = $db->findOneAndReplace('test', [
 	'name' => '小明',
 	'uid'  => uniqid(),
 ]);
-var_dump($info);
+var_dump($info->value());
 
 $info = $db->replaceOne('test', [
 	'_id' => $updateId,
@@ -103,23 +105,23 @@ $info = $db->replaceOne('test', [
 	'name' => '小红',
 	'uid'  => uniqid(),
 ]);
-var_dump($info);
+var_dump($info->value());
 
 // 查找一条数据后删除
 $info = $db->findOneAndDelete('test', [
 	'_id' => $updateId,
 ]);
-var_dump($info);
+var_dump($info->value());
 
 // 查找所有数据并返回总量
 $result = $db->findAndTotalRows('test', [], [
 	'limit' => 10,
 ]);
-var_dump($result);
+var_dump($result->value());
 
 // 查找唯一值
 $result = $db->distinct('test', 'update_at');
-var_dump($result);
+var_dump($result->value());
 
 // 聚合查询
 $result = $db->aggregate('test', [
@@ -132,13 +134,13 @@ $result = $db->aggregate('test', [
 		],
 	],
 ]);
-var_dump($result);
+var_dump($result->value());
 
 // 删除数据
 $deleteCount = $db->deleteOne('test', [
 	'_id' => $newInsertedId,
 ]);
-var_dump($deleteCount);
+var_dump($deleteCount->value());
 
 // 删除多条数据
 //$deleteCount = $db->deleteMany('test');
@@ -159,10 +161,13 @@ $serverless = new Serverless([
 ]);
 $serverless->setLogger(new PrintLogger());
 
-$func = $serverless->func;
 try{
 	$result = $func->invoke('hello', ['world']);
 	var_dump($result);
+
+	if("Hello world!" == $result){
+		var_dump("lalalala!");
+	}
 }catch(ServerlessException $e){
 	echo $e->getMessage();
 }
@@ -190,11 +195,11 @@ try{
 	echo $e->getMessage();
 }
 
-try{
-	$file = $serverless->file;
-	$info = $file->putData('public', "./000.jpg", file_get_contents("./000.jpg"));
-	var_dump($info);
-}catch(ServerlessException $e){
-	echo $e->getMessage();
-}
+//try{
+//	$file = $serverless->file;
+//	$info = $file->putData('public', "./000.jpg", file_get_contents("./000.jpg"));
+//	var_dump($info);
+//}catch(ServerlessException $e){
+//	echo $e->getMessage();
+//}
 ```

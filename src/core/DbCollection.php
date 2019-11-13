@@ -64,7 +64,7 @@ class DbCollection{
 	 *
 	 * @param array $data
 	 * @param array $options
-	 * @return string
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function insert(array $data, array $options = []){
@@ -80,7 +80,7 @@ class DbCollection{
 	 *
 	 * @param array $data
 	 * @param array $options
-	 * @return array
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function insertMany(array $data = [], array $options = []){
@@ -96,7 +96,7 @@ class DbCollection{
 	 *
 	 * @param array $options
 	 * @param bool  $force 是否强制删除
-	 * @return int
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 * @throws \duoguan\aliyun\serverless\core\DbException
 	 */
@@ -118,7 +118,7 @@ class DbCollection{
 	 *
 	 * @param array $options
 	 * @param bool  $force 是否强制删除
-	 * @return int
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 * @throws \duoguan\aliyun\serverless\core\DbException
 	 */
@@ -140,7 +140,7 @@ class DbCollection{
 	 *
 	 * @param array $options
 	 * @param bool  $force 是否强制执行
-	 * @return array
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 * @throws \duoguan\aliyun\serverless\core\DbException
 	 */
@@ -163,7 +163,7 @@ class DbCollection{
 	 * @param array $data
 	 * @param array $options
 	 * @param bool  $force 是否强制执行
-	 * @return int
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 * @throws \duoguan\aliyun\serverless\core\DbException
 	 */
@@ -187,7 +187,7 @@ class DbCollection{
 	 * @param array $data
 	 * @param array $options
 	 * @param bool  $force 是否强制执行
-	 * @return int
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 * @throws \duoguan\aliyun\serverless\core\DbException
 	 */
@@ -211,7 +211,7 @@ class DbCollection{
 	 * @param array $data
 	 * @param array $options
 	 * @param bool  $force 是否强制执行
-	 * @return array
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 * @throws \duoguan\aliyun\serverless\core\DbException
 	 */
@@ -233,7 +233,7 @@ class DbCollection{
 	 * 查找单个数据
 	 *
 	 * @param array $options
-	 * @return array
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function find(array $options = []){
@@ -249,7 +249,7 @@ class DbCollection{
 	 * 查找多个数据
 	 *
 	 * @param array $options
-	 * @return array
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function findAll(array $options = []){
@@ -267,7 +267,7 @@ class DbCollection{
 	 * @param array $replacement
 	 * @param array $options
 	 * @param bool  $force 是否强制执行
-	 * @return array
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 * @throws \duoguan\aliyun\serverless\core\DbException
 	 */
@@ -289,7 +289,7 @@ class DbCollection{
 	 * 查询集合里面的数据并返回总数量
 	 *
 	 * @param array $options
-	 * @return array
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function findAndTotalRows(array $options = []){
@@ -320,8 +320,8 @@ class DbCollection{
 	/**
 	 * 统计数量
 	 *
-	 * @param array  $options
-	 * @return int
+	 * @param array $options
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function count(array $options = []){
@@ -338,7 +338,7 @@ class DbCollection{
 	 *
 	 * @param string $key
 	 * @param array  $options
-	 * @return array
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function distinct($key, array $options = []){

@@ -26,11 +26,11 @@ $testModel = $serverless->db->collection('test');
 
 // 查找数据
 $data = $testModel->findAll();
-var_dump($data);
+var_dump($data->value());
 
 // 新增数据
 $data = $testModel->insert([
 	'title'   => date('YmdHis').uniqid("tt"),
 	'content' => '最好用的severless-sdk',
 ]);
-var_dump($data);
+var_dump($data->value());
