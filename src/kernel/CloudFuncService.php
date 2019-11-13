@@ -25,7 +25,7 @@ class CloudFuncService extends BaseService{
 	 *
 	 * @param string $functionTarget
 	 * @param array  $functionArgs
-	 * @return array
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function invoke($functionTarget, $functionArgs = []){

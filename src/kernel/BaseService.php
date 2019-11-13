@@ -34,7 +34,7 @@ abstract class BaseService{
 	 *
 	 * @param string $service
 	 * @param array  $params
-	 * @return array
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	protected function request($service, $params){

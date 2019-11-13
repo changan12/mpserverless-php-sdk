@@ -28,7 +28,7 @@ class DbService extends BaseService{
 	 * @param string $collection
 	 * @param array  $doc
 	 * @param array  $options
-	 * @return string
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function insertOne($collection, array $doc = [], array $options = []){
@@ -38,7 +38,7 @@ class DbService extends BaseService{
 			'doc'        => empty($doc) ? new \stdClass() : $doc,
 			'options'    => empty($options) ? new \stdClass() : $options,
 		]);
-		return $result['result']['insertedId'];
+		return $result->withDataSource($result['result']['insertedId']);
 	}
 
 	/**
@@ -47,7 +47,7 @@ class DbService extends BaseService{
 	 * @param string $collection
 	 * @param array  $docs
 	 * @param array  $options
-	 * @return array insert id list
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface insert id list
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function insertMany($collection, array $docs = [], array $options = []){
@@ -57,7 +57,7 @@ class DbService extends BaseService{
 			'docs'       => empty($docs) ? new \stdClass() : $docs,
 			'options'    => empty($options) ? new \stdClass() : $options,
 		]);
-		return $result['result'];
+		return $result->withDataSource($result['result']);
 	}
 
 	/**
@@ -66,7 +66,7 @@ class DbService extends BaseService{
 	 * @param string $collection
 	 * @param array  $filter
 	 * @param array  $options
-	 * @return int
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function deleteOne($collection, array $filter = [], array $options = []){
@@ -76,7 +76,7 @@ class DbService extends BaseService{
 			'filter'     => empty($filter) ? new \stdClass() : $filter,
 			'options'    => empty($options) ? new \stdClass() : $options,
 		]);
-		return $result['affectedDocs'];
+		return $result->withDataSource($result['affectedDocs']);
 	}
 
 	/**
@@ -85,7 +85,7 @@ class DbService extends BaseService{
 	 * @param string $collection
 	 * @param array  $filter
 	 * @param array  $options
-	 * @return int
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function deleteMany($collection, array $filter = [], array $options = []){
@@ -96,7 +96,7 @@ class DbService extends BaseService{
 			'filter'     => empty($filter) ? new \stdClass() : $filter,
 			'options'    => empty($options) ? new \stdClass() : $options,
 		]);
-		return $result['affectedDocs'];
+		return $result->withDataSource($result['affectedDocs']);
 	}
 
 	/**
@@ -105,7 +105,7 @@ class DbService extends BaseService{
 	 * @param string $collection
 	 * @param array  $filter
 	 * @param array  $options
-	 * @return array
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function findOneAndDelete($collection, array $filter = [], array $options = []){
@@ -115,7 +115,7 @@ class DbService extends BaseService{
 			'filter'     => empty($filter) ? new \stdClass() : $filter,
 			'options'    => empty($options) ? new \stdClass() : $options,
 		]);
-		return $result['result']['value'];
+		return $result->withDataSource($result['result']['value']);
 	}
 
 	/**
@@ -125,7 +125,7 @@ class DbService extends BaseService{
 	 * @param array  $filter
 	 * @param array  $update
 	 * @param array  $options
-	 * @return int
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function updateOne($collection, array $filter = [], array $update = [], array $options = []){
@@ -136,7 +136,7 @@ class DbService extends BaseService{
 			'filter'     => empty($filter) ? new \stdClass() : $filter,
 			'options'    => empty($options) ? new \stdClass() : $options,
 		]);
-		return $result['affectedDocs'];
+		return $result->withDataSource($result['affectedDocs']);
 	}
 
 	/**
@@ -146,7 +146,7 @@ class DbService extends BaseService{
 	 * @param array  $filter
 	 * @param array  $update
 	 * @param array  $options
-	 * @return int
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function updateMany($collection, array $filter = [], array $update = [], array $options = []){
@@ -158,7 +158,7 @@ class DbService extends BaseService{
 			'filter'     => empty($filter) ? new \stdClass() : $filter,
 			'options'    => empty($options) ? new \stdClass() : $options,
 		]);
-		return $result['affectedDocs'];
+		return $result->withDataSource($result['affectedDocs']);
 	}
 
 	/**
@@ -168,7 +168,7 @@ class DbService extends BaseService{
 	 * @param array  $filter
 	 * @param array  $update
 	 * @param array  $options
-	 * @return array
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function findOneAndUpdate($collection, array $filter = [], array $update = [], array $options = []){
@@ -179,7 +179,7 @@ class DbService extends BaseService{
 			'filter'     => empty($filter) ? new \stdClass() : $filter,
 			'options'    => empty($options) ? new \stdClass() : $options,
 		]);
-		return $result['result']['value'];
+		return $result->withDataSource($result['result']['value']);
 	}
 
 	/**
@@ -189,7 +189,7 @@ class DbService extends BaseService{
 	 * @param array  $filter
 	 * @param array  $doc
 	 * @param array  $options
-	 * @return int
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function replaceOne($collection, array $filter = [], array $doc = [], array $options = []){
@@ -200,7 +200,7 @@ class DbService extends BaseService{
 			'doc'        => empty($doc) ? new \stdClass() : $doc,
 			'options'    => empty($options) ? new \stdClass() : $options,
 		]);
-		return $result['affectedDocs'];
+		return $result->withDataSource($result['affectedDocs']);
 	}
 
 	/**
@@ -210,7 +210,7 @@ class DbService extends BaseService{
 	 * @param array  $filter
 	 * @param array  $replacement
 	 * @param array  $options
-	 * @return array
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function findOneAndReplace($collection, array $filter = [], array $replacement = [], array $options = []){
@@ -221,7 +221,7 @@ class DbService extends BaseService{
 			'replacement' => empty($replacement) ? new \stdClass() : $replacement,
 			'options'     => empty($options) ? new \stdClass() : $options,
 		]);
-		return $result['result']['value'];
+		return $result->withDataSource($result['result']['value']);
 	}
 
 	/**
@@ -230,7 +230,7 @@ class DbService extends BaseService{
 	 * @param string $collection
 	 * @param array  $query
 	 * @param array  $options
-	 * @return array
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function findOne($collection, array $query = [], array $options = []){
@@ -240,7 +240,7 @@ class DbService extends BaseService{
 			'query'      => empty($query) ? new \stdClass() : $query,
 			'options'    => empty($options) ? new \stdClass() : $options,
 		]);
-		return $result['result'];
+		return $result->withDataSource($result['result']);
 	}
 
 	/**
@@ -249,7 +249,7 @@ class DbService extends BaseService{
 	 * @param string $collection
 	 * @param array  $query
 	 * @param array  $options
-	 * @return array
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function find($collection, array $query = [], array $options = []){
@@ -260,7 +260,7 @@ class DbService extends BaseService{
 			'query'      => empty($query) ? new \stdClass() : $query,
 			'options'    => empty($options) ? new \stdClass() : $options,
 		]);
-		return $result['result'];
+		return $result->withDataSource($result['result']);
 	}
 
 	/**
@@ -269,23 +269,23 @@ class DbService extends BaseService{
 	 * @param string $collection
 	 * @param array  $query
 	 * @param array  $options
-	 * @return array
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function findAndTotalRows($collection, array $query = [], array $options = []){
 		$result = $this->find($collection, $query, $options);
 		$totalRows = $this->count($collection, $query);
 
-		$result = [
-			'data'      => $result,
-			'totalRows' => $totalRows,
+		$result2 = [
+			'data'      => $result->value(),
+			'totalRows' => $totalRows->value(),
 		];
 
 		if(isset($options['paginate']) && is_callable($options['paginate'])){
 			return call_user_func($options['paginate'], $result, $options);
 		}
 
-		return $result;
+		return $result->withDataSource($result2);
 	}
 
 	/**
@@ -304,7 +304,7 @@ class DbService extends BaseService{
 			'pipeline'   => empty($pipeline) ? new \stdClass() : $pipeline,
 			'options'    => empty($options) ? new \stdClass() : $options,
 		]);
-		return $result['result'];
+		return $result->withDataSource($result['result']);
 	}
 
 	/**
@@ -313,7 +313,7 @@ class DbService extends BaseService{
 	 * @param string $collection
 	 * @param array  $query
 	 * @param array  $options
-	 * @return int
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function count($collection, array $query = [], array $options = []){
@@ -323,7 +323,7 @@ class DbService extends BaseService{
 			'query'      => empty($query) ? new \stdClass() : $query,
 			'options'    => empty($options) ? new \stdClass() : $options,
 		]);
-		return $result['result'];
+		return $result->withDataSource($result['result']);
 	}
 
 	/**
@@ -333,7 +333,7 @@ class DbService extends BaseService{
 	 * @param string $key
 	 * @param array  $query
 	 * @param array  $options
-	 * @return array
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function distinct($collection, $key, array $query = [], array $options = []){
@@ -344,7 +344,7 @@ class DbService extends BaseService{
 			'query'      => empty($query) ? new \stdClass() : $query,
 			'options'    => empty($options) ? new \stdClass() : $options,
 		]);
-		return $result['result'];
+		return $result->withDataSource($result['result']);
 	}
 
 	/**

@@ -24,6 +24,10 @@ $func = $serverless->func;
 try{
 	$result = $func->invoke('hello', ['world']);
 	var_dump($result);
+
+	if("Hello world!" == $result){
+		var_dump("lalalala!");
+	}
 }catch(ServerlessException $e){
 	echo $e->getMessage();
 }

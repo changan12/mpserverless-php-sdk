@@ -20,7 +20,7 @@ use Psr\Http\Message\RequestInterface;
  *
  * @package duoguan\aliyun\serverless\kernel
  */
-class FileService{
+class FileService extends BaseService{
 
 	/**
 	 * @var \duoguan\aliyun\serverless\Serverless
@@ -40,15 +40,12 @@ class FileService{
 	 * 删除文件
 	 *
 	 * @param string $id
-	 * @return array
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function fileDelete($id){
-		return $this->serverless->request([
-			'method' => 'serverless.file.resource.isv.delete',
-			'params' => json_encode([
-				'id' => $id,
-			]),
+		return $this->request('serverless.file.resource.isv.delete', [
+			'id' => $id,
 		]);
 	}
 
@@ -57,16 +54,13 @@ class FileService{
 	 *
 	 * @param string $id
 	 * @param string $contentType
-	 * @return array
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function fileReport($id, $contentType = null){
-		return $this->serverless->request([
-			'method' => 'serverless.file.resource.isv.report',
-			'params' => json_encode([
-				'id'          => $id,
-				'contentType' => $contentType,
-			]),
+		return $this->request('serverless.file.resource.isv.report', [
+			'id'          => $id,
+			'contentType' => $contentType,
 		]);
 	}
 
@@ -77,18 +71,15 @@ class FileService{
 	 * @param string $filename
 	 * @param int    $size
 	 * @param string $targetPath
-	 * @return array
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function fileGenerateProximalSign($env, $filename, $size = 0, $targetPath = null){
-		return $this->serverless->request([
-			'method' => 'serverless.file.resource.isv.generateProximalSign',
-			'params' => json_encode([
-				'env'        => $env,
-				'filename'   => $filename,
-				'size'       => $size,
-				'targetPath' => $targetPath,
-			]),
+		return $this->request('serverless.file.resource.isv.generateProximalSign', [
+			'env'        => $env,
+			'filename'   => $filename,
+			'size'       => $size,
+			'targetPath' => $targetPath,
 		]);
 	}
 
@@ -107,7 +98,7 @@ class FileService{
 
 		// 上传文件
 		try{
-			$this->upload($uploadInfo, $filename, fopen($filename, 'r'));
+			$this->upload($uploadInfo->value(), $filename, fopen($filename, 'r'));
 		}catch(RequestException $e){
 			$this->recordRequestException($e);
 
@@ -117,7 +108,7 @@ class FileService{
 		// 上报文件并入库
 		$this->fileReport($uploadInfo['id']);
 
-		return $this->buildSuccessResult($uploadInfo);
+		return $this->buildSuccessResult($uploadInfo->value());
 	}
 
 	/**
@@ -136,7 +127,7 @@ class FileService{
 
 		// 上传文件
 		try{
-			$this->upload($uploadInfo, $filename, $data);
+			$this->upload($uploadInfo->value(), $filename, $data);
 		}catch(RequestException $e){
 			$this->recordRequestException($e);
 			throw $e;
@@ -145,7 +136,7 @@ class FileService{
 		// 上报文件并入库
 		$this->fileReport($uploadInfo['id']);
 
-		return $this->buildSuccessResult($uploadInfo);
+		return $this->buildSuccessResult($uploadInfo->value());
 	}
 
 	/**

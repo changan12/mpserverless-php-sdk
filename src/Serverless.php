@@ -12,6 +12,7 @@ use duoguan\aliyun\serverless\logger\EmptyLogger;
 use duoguan\aliyun\serverless\providers\CloudFuncServiceProvider;
 use duoguan\aliyun\serverless\providers\DbServiceProvider;
 use duoguan\aliyun\serverless\providers\FileServiceProvider;
+use duoguan\aliyun\serverless\response\Factory as ResponseFactory;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Log\LoggerAwareInterface;
@@ -131,7 +132,7 @@ class Serverless extends ProviderContainer implements LoggerAwareInterface{
 	 * 请求
 	 *
 	 * @param array $data
-	 * @return array
+	 * @return \duoguan\aliyun\serverless\response\ResponseInterface
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function request(array $data){
@@ -153,8 +154,14 @@ class Serverless extends ProviderContainer implements LoggerAwareInterface{
 			];
 
 			$response = $this->httpClient->post($this->getGatewayUrl(), $options);
+
+			$this->getLogger()->debug("response requestId : %s", [$response->getHeaderLine('request-id')]);
 		}catch(RequestException $e){
 			$response = $e->hasResponse() ? $e->getResponse() : null;
+			if($response){
+				$this->getLogger()->debug("response requestId : %s", [$response->getHeaderLine('request-id')]);
+			}
+
 			$this->getLogger()->warning("bad request , request data : %s;response data : %s;", [
 				$e->getRequest(),
 				$response ? $response->getBody()->getContents() : "",
@@ -163,13 +170,12 @@ class Serverless extends ProviderContainer implements LoggerAwareInterface{
 			throw $e;
 		}
 
-		$result = $response->getBody()->getContents();
-		$result = json_decode($result, true);
+		$result = ResponseFactory::make($this->getSpaceId(), $response);
 		if(isset($result['success']) && !$result['success']){
 			throw new ServerlessException($result['error']['message']."(".$result['error']['code'].")", 400040);
 		}
 
-		return $result['data'];
+		return $result->withDataSource($result['data']);
 	}
 
 	/**
