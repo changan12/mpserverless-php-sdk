@@ -197,11 +197,13 @@ class FileService extends BaseService{
 			};
 		});
 
-		$httpClient->request('POST', "https://".$uploadInfo['host'], [
+		$url = "https://{$uploadInfo['host']}";
+		$httpClient->request('POST', $url, [
 			'handler'   => $stack,
 			'headers'   => [
 				"Cache-Control"                => "max-age=2592000",
 				'X-OSS-server-side-encrpytion' => 'AES256',
+				'security-token'               => $uploadInfo['securityToken'],
 			],
 			'multipart' => [
 				[
@@ -231,6 +233,10 @@ class FileService extends BaseService{
 				[
 					'name'     => 'success_action_status',
 					'contents' => '200',
+				],
+				[
+					'name'     => 'x-oss-security-token',
+					'contents' => $uploadInfo['securityToken'],
 				],
 				[
 					'name'     => 'file',
