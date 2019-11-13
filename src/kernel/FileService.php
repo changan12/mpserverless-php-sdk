@@ -148,7 +148,8 @@ class FileService extends BaseService{
 		$request = $e->getRequest();
 		$request->getBody()->rewind();
 		$response = $e->hasResponse() ? $e->getResponse() : null;
-		$this->serverless->getLogger()->warning("bad request , request data : %s;response data : %s;", [
+
+		$this->serverless->getLogger()->warning("upload file bad request !!! \nrequest data :\n %s;\nresponse data : \n%s;", [
 			$request->getBody()->getContents(),
 			$response ? $response->getBody()->getContents() : "",
 		]);
@@ -235,9 +236,6 @@ class FileService extends BaseService{
 					'name'     => 'file',
 					'contents' => $data,
 					'filename' => $filename,
-					//					'headers'  => [
-					//						'Content-Type' => 0,
-					//					],
 				],
 			],
 		]);

@@ -26,7 +26,7 @@ class PrintLogger extends AbstractLogger{
 		$context = array_map(function($item){
 			return is_scalar($item) ? $item : json_encode($item, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 		}, $context);
-		array_unshift($context, "[{$level}] {$time} {$message} \n\n");
+		array_unshift($context, "[{$level}] {$time} {$message}\n");
 		echo call_user_func_array('sprintf', $context);
 	}
 }

@@ -140,10 +140,8 @@ class Serverless extends ProviderContainer implements LoggerAwareInterface{
 		$data["timestamp"] = Time::getMillisecond(); // 毫秒级别时间戳
 
 		$sign = self::makeSign($data, $this->getPrivateKey());
-		$this->getLogger()->debug("make sign : %s", [$sign]);
-
 		$dataStr = http_build_query($data);
-		$this->getLogger()->debug("request data : %s", [$dataStr]);
+		$this->getLogger()->debug("request data : %s\nmake sign: %s", [$dataStr, $sign]);
 
 		try{
 			$options = [
@@ -158,11 +156,12 @@ class Serverless extends ProviderContainer implements LoggerAwareInterface{
 			$this->getLogger()->debug("response requestId : %s", [$response->getHeaderLine('request-id')]);
 		}catch(RequestException $e){
 			$response = $e->hasResponse() ? $e->getResponse() : null;
+
 			if($response){
 				$this->getLogger()->debug("response requestId : %s", [$response->getHeaderLine('request-id')]);
 			}
 
-			$this->getLogger()->warning("bad request , request data : %s;response data : %s;", [
+			$this->getLogger()->warning("bad request !!! \nrequest data :\n %s;\nresponse data : \n%s;", [
 				$e->getRequest(),
 				$response ? $response->getBody()->getContents() : "",
 			]);
