@@ -8,7 +8,7 @@
 
 namespace duoguan\aliyun\serverless\response;
 
-interface ResponseInterface extends \ArrayAccess{
+interface ResponseInterface extends \ArrayAccess, \JsonSerializable{
 
 	/**
 	 * get request id
