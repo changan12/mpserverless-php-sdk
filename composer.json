@@ -2,7 +2,7 @@
 	"name":"duoguan/mpserverless-sdk",
 	"description":"阿里云mpserverless-php-sdk",
 	"type":"library",
-	"version":"1.3.45",
+	"version":"1.3.46",
 	"authors":[
 		{
 			"name":"晋",

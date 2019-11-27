@@ -273,19 +273,19 @@ class DbService extends BaseService{
 	 * @throws \duoguan\aliyun\serverless\ServerlessException
 	 */
 	public function findAndTotalRows($collection, array $query = [], array $options = []){
-		$result = $this->find($collection, $query, $options);
+		$data = $this->find($collection, $query, $options);
 		$totalRows = $this->count($collection, $query);
 
-		$result2 = [
-			'data'      => $result->value(),
+		$result = $data->withDataSource([
+			'data'      => $data->value(),
 			'totalRows' => $totalRows->value(),
-		];
+		]);
 
 		if(isset($options['paginate']) && is_callable($options['paginate'])){
 			return call_user_func($options['paginate'], $result, $options);
 		}
 
-		return $result->withDataSource($result2);
+		return $result;
 	}
 
 	/**
