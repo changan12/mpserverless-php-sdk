@@ -9,4 +9,31 @@ namespace duoguan\aliyun\serverless;
 
 class ServerlessException extends \Exception{
 
+	/**
+	 * @var string
+	 */
+	private $requestId;
+
+	/**
+	 * Construct the exception. Note: The message is NOT binary safe.
+	 *
+	 * @link https://php.net/manual/en/exception.construct.php
+	 * @param string     $message [optional] The Exception message to throw.
+	 * @param int        $code [optional] The Exception code.
+	 * @param string     $requestId
+	 * @param \Throwable $previous [optional] The previous throwable used for the exception chaining.
+	 * @since 5.1.0
+	 */
+	public function __construct($message = "", $code = 0, $requestId = "", \Throwable $previous = null){
+		parent::__construct($message, $code, $previous);
+		$this->requestId = $requestId;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getRequestId(){
+		return $this->requestId;
+	}
+
 }

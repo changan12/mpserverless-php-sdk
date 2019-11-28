@@ -143,6 +143,7 @@ class Serverless extends ProviderContainer implements LoggerAwareInterface{
 		$dataStr = http_build_query($data);
 		$this->getLogger()->debug("request data : %s\nmake sign: %s", [$dataStr, $sign]);
 
+		$requestId = '';
 		try{
 			$options = [
 				'headers'     => [
@@ -153,12 +154,14 @@ class Serverless extends ProviderContainer implements LoggerAwareInterface{
 
 			$response = $this->httpClient->post($this->getGatewayUrl(), $options);
 
-			$this->getLogger()->debug("response requestId : %s", [$response->getHeaderLine('request-id')]);
+			$requestId = $response->getHeaderLine('request-id');
+			$this->getLogger()->debug("response requestId : %s", [$requestId]);
 		}catch(RequestException $e){
 			$response = $e->hasResponse() ? $e->getResponse() : null;
 
 			if($response){
-				$this->getLogger()->debug("response requestId : %s", [$response->getHeaderLine('request-id')]);
+				$requestId = $response->getHeaderLine('request-id');
+				$this->getLogger()->debug("response requestId : %s", [$requestId]);
 			}
 
 			$this->getLogger()->warning("bad request !!! \nrequest data :\n %s;\nresponse data : \n%s;", [
@@ -171,7 +174,7 @@ class Serverless extends ProviderContainer implements LoggerAwareInterface{
 
 		$result = ResponseFactory::make($this->getSpaceId(), $response);
 		if(isset($result['success']) && !$result['success']){
-			throw new ServerlessException($result['error']['message']."(".$result['error']['code'].")", 400040);
+			throw new ServerlessException($result['error']['message']."(".$result['error']['code'].")", 400040, $requestId);
 		}
 
 		return $result->withDataSource($result['data']);
