@@ -155,13 +155,13 @@ class Serverless extends ProviderContainer implements LoggerAwareInterface{
 			$response = $this->httpClient->post($this->getGatewayUrl(), $options);
 
 			$requestId = $response->getHeaderLine('request-id');
-			$this->getLogger()->debug("response requestId : %s", [$requestId]);
+			$this->getLogger()->info("response requestId : %s", [$requestId]);
 		}catch(RequestException $e){
 			$response = $e->hasResponse() ? $e->getResponse() : null;
 
 			if($response){
 				$requestId = $response->getHeaderLine('request-id');
-				$this->getLogger()->debug("response requestId : %s", [$requestId]);
+				$this->getLogger()->info("response requestId : %s", [$requestId]);
 			}
 
 			$this->getLogger()->warning("bad request !!! \nrequest data :\n %s;\nresponse data : \n%s;", [
@@ -169,7 +169,7 @@ class Serverless extends ProviderContainer implements LoggerAwareInterface{
 				$response ? $response->getBody()->getContents() : "",
 			]);
 
-			throw $e;
+			throw new ServerlessException($e->getMessage()."[request-id:{$requestId}]", $e->getCode(), $e);
 		}
 
 		$result = ResponseFactory::make($this->getSpaceId(), $response);
