@@ -174,7 +174,7 @@ class Serverless extends ProviderContainer implements LoggerAwareInterface{
 
 		$result = ResponseFactory::make($this->getSpaceId(), $response);
 		if(isset($result['success']) && !$result['success']){
-			throw new ServerlessException($result['error']['message']."(".$result['error']['code'].")", 400040, $requestId);
+			throw new ServerlessException($result['error']['message']."({$result['error']['code']})	[requestId:{$requestId}]", 400040);
 		}
 
 		return $result->withDataSource($result['data']);
