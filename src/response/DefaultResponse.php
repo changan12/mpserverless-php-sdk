@@ -163,6 +163,13 @@ class DefaultResponse implements ResponseInterface{
 	}
 
 	/**
+	 * @inheritDoc
+	 */
+	public function isNullData(){
+		return is_null($this->data);
+	}
+
+	/**
 	 * 转换成字符串
 	 *
 	 * @return string
@@ -208,4 +215,5 @@ class DefaultResponse implements ResponseInterface{
 	public function count(){
 		return count($this->data);
 	}
+
 }

@@ -32,6 +32,13 @@ interface ResponseInterface extends \ArrayAccess, \Countable, \IteratorAggregate
 	public function getRawData();
 
 	/**
+	 * 苏剧是否为null
+	 *
+	 * @return bool
+	 */
+	public function isNullData();
+
+	/**
 	 * 重新装载数据源
 	 *
 	 * @param array $data
